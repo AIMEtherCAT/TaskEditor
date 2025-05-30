@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <el-page-header content="University of Nottingham EtherCat Module Configuration" style="margin-bottom: 10px;"/>
-    <el-tabs v-model="activeName" stretch :before-leave="call_update">
+    <el-page-header content="University of Nottingham EtherCAT Module Configuration" style="margin-bottom: 10px;"/>
+    <el-tabs v-model="activeName" :before-leave="call_update" stretch>
       <el-tab-pane label="Module Settings" name="assignment">
-        <new-generator />
+        <new-generator/>
       </el-tab-pane>
 
       <el-tab-pane label="Config Generator" name="generator">
@@ -21,14 +21,14 @@
 </template>
 
 <script>
-import NewGenerator from "@/components/newgen.vue";
-import codeGen from "@/components/newcodegen.vue";
+import ModuleSettings from "@/components/module_settings.vue";
+import CodeGenerator from "@/components/code_generator.vue";
 
 export default {
   name: 'TaskAssignment',
   components: {
-    NewGenerator,
-    codeGen
+    NewGenerator: ModuleSettings,
+    codeGen: CodeGenerator
   },
   mounted() {
     document.title = 'TaskAssignment'
@@ -48,7 +48,7 @@ export default {
 <style>
 #app {
   margin: 25px;
-  font-family: Arial,serif !important;
+  font-family: Arial, serif !important;
 }
 
 .el-page-header__left {

@@ -1,4 +1,4 @@
-# homecenter_fe
+# taskeditor
 
 ## Project setup
 ```
