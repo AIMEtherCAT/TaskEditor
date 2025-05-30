@@ -15,7 +15,7 @@
       <div class="c_top">
         <div class="xh">Made<br>with love</div>
       </div>
-      <div>2024.10 v1.1</div>
+      <div>2025.05 v2.0</div>
     </div>
   </div>
 </template>
