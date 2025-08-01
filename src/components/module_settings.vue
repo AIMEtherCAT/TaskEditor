@@ -4,7 +4,8 @@
     <div style="text-align: center">
       <!-- TODO: finish flight module -->
       <!--      <el-button @click="modules.push({type: 0x01, task: []})">Flight Module</el-button>-->
-      <el-button @click="modules.push({type: 0x02, task: [], latency_topic: '', sn: ''})">Motor Module</el-button>
+      <el-button @click="modules.push({type: 0x02, task: [], latency_topic: '', sn: ''})" disabled>Motor Module</el-button>
+      <el-button @click="modules.push({type: 0x03, task: [], latency_topic: '', sn: ''})">H750 Universal Module</el-button>
     </div>
 
     <el-divider>
@@ -21,17 +22,20 @@
 
         <el-table-column type="expand">
           <template slot-scope="props">
-            <!-- Flight Module -->
-            <div v-if="props.row.type === 0x01">
-
-            </div>
-
-            <!-- Motor Module -->
-            <div v-if="props.row.type === 0x02">
-              <div class="text item" style="margin: 30px">
+            <div>
+              <div class="text item with_margin_bottom" style="margin: 30px">
                 <el-divider content-position="left">Add Task</el-divider>
+                <el-button @click="props.row.task.push(deepClone(examples.djirc))">DJI RC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.dshot))">DShot</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.djican))">DJI Motor</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.vanilla_pwm))">OnBoard PWM</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.external_pwm))">ExternalBoard PWM</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.ms5876_30ba))">MS5876(30BA)</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN)</el-button>
+
 
                 <el-divider content-position="left">Module Task Detail Configuration</el-divider>
                 <el-table
@@ -41,6 +45,115 @@
 
                   <el-table-column type="expand">
                     <template slot-scope="props2">
+
+                      <!-- DJI RC -->
+                      <div v-if="props2.row.type === 1">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="DJI RC Publisher Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.read_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - DJI RC</el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/ReadDJIRC</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="header" style="margin: 0">
+                              <el-tag size="small">std_msgs/Header</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="online" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="left_x" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="left_y" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="right_x" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="right_y" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="dial" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="left_switch" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="right_switch" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="w" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="s" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="a" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="d" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="q" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="e" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="r" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="f" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="g" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="z" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="x" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="c" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="v" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="b" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="shift" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="ctrl" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+
+                            <el-form-item class="havetag" label="mouse_x" style="margin: 0">
+                              <el-tag size="small">int16</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="mouse_y" style="margin: 0">
+                              <el-tag size="small">int16</el-tag>
+                            </el-form-item>
+
+                            <el-form-item class="havetag" label="mouse_left_clicked" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="mouse_right_clicked" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                          </el-form>
+                        </div>
+                      </div>
+
                       <!-- LkTech Motor -->
                       <div v-if="props2.row.type === 0x02">
                         <div class="text item" style="margin: 30px">
@@ -230,6 +343,67 @@
                           </el-form>
                         </div>
                       </div>
+
+                      <!-- HIPNUC IMU (CAN) -->
+                      <div v-if="props2.row.type === 3">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="HIPNUC IMU Publisher Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.read_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - HIPNUC IMU</el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>sensor_msgs/Imu</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                          </el-form>
+                        </div>
+                      </div>
+
+                      <!-- DSHOT -->
+                      <div v-if="props2.row.type === 4">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+
+                            <el-divider content-position="left">TIM Configuration</el-divider>
+                            <el-form-item label="TIM" style="margin: 0">
+                              <el-radio-group v-model="props2.row.dshot_id">
+                                <el-radio :label="1">DSHOT1</el-radio>
+                                <el-radio :label="2">DSHOT2</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="Motor Command Subscriber Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.write_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/write`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - Motor Control Command
+                            </el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/WriteDSHOT</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="channel1" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channel2" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channel3" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channel4" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                          </el-form>
+                        </div>
+                      </div>
+
                       <!-- DJI Motor -->
                       <div v-if="props2.row.type === 0x05">
                         <div class="text item" style="margin: 30px">
@@ -441,6 +615,220 @@
                           </el-form>
                         </div>
                       </div>
+
+                      <!-- OnBoard PWM -->
+                      <div v-if="props2.row.type === 6">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+
+                            <el-divider content-position="left">TIM Configuration</el-divider>
+                            <el-form-item label="TIM" style="margin: 0">
+                              <el-radio-group v-model="props2.row.tim_id">
+                                <el-radio :label="2">TIM2</el-radio>
+                                <el-radio :label="5">TIM5</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
+
+                            <el-form-item label="Period" style="margin: 0">
+                              <el-input v-model="props2.row.expected_period"
+                                        @input="(v)=>(props2.row.expected_period=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))">
+                                <template slot="append">
+                                  us
+                                </template>
+                              </el-input>
+                            </el-form-item>
+
+                            <el-form-item label="Initial Value" style="margin: 0">
+                              <el-input v-model="props2.row.init_value"
+                                        @input="(v)=>(props2.row.init_value=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))">
+                                <template slot="append">
+                                  us
+                                </template>
+                              </el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="Motor Command Subscriber Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.write_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/write`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - Motor Control Command
+                            </el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/WriteVanillaPWM</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="channel1" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channel2" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channel3" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channel4" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                          </el-form>
+                        </div>
+                      </div>
+
+                      <!-- ExternalBoard PWM -->
+                      <div v-if="props2.row.type === 7">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+
+                            <el-divider content-position="left">UART Configuration</el-divider>
+                            <el-form-item label="UART" style="margin: 0">
+                              <el-radio-group v-model="props2.row.uart_id">
+                                <el-radio :label="1">UART1</el-radio>
+                                <el-radio :label="4">UART4</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
+
+                            <el-form-item label="Enabled Channel Count" style="margin: 0">
+                              <el-input-number v-model="props2.row.enabled_channel_count" :min="1" :max="16" />
+                            </el-form-item>
+
+                            <el-form-item label="Period" style="margin: 0">
+                              <el-input v-model="props2.row.expected_period"
+                                        @input="(v)=>(props2.row.expected_period=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))">
+                                <template slot="append">
+                                  us
+                                </template>
+                              </el-input>
+                            </el-form-item>
+
+                            <el-form-item label="Initial Value" style="margin: 0">
+                              <el-input v-model="props2.row.init_value"
+                                        @input="(v)=>(props2.row.init_value=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))">
+                                <template slot="append">
+                                  us
+                                </template>
+                              </el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="Motor Command Subscriber Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.write_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/write`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - Motor Control Command
+                            </el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/WriteExternalPWM</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="channels" style="margin: 0">
+                              <el-tag size="small">uint16[]</el-tag>
+                            </el-form-item>
+                          </el-form>
+                        </div>
+                      </div>
+
+                      <!-- MS5876(30BA) -->
+                      <div v-if="props2.row.type === 8">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="MS5876(30BA) Publisher Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.read_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - MS5876(30BA)</el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/ReadMS5876BA30</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="header" style="margin: 0">
+                              <el-tag size="small">std_msgs/Header</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="temperature" style="margin: 0">
+                              <el-tag size="small">float64</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="pressure" style="margin: 0">
+                              <el-tag size="small">float64</el-tag>
+                            </el-form-item>
+                          </el-form>
+                        </div>
+                      </div>
+
+                      <!-- OnBoard ADC -->
+                      <div v-if="props2.row.type === 9">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+
+                            <el-divider content-position="left">ADC Configuration</el-divider>
+
+                            <el-form-item label="Coefficient for channel 1" style="margin: 0">
+                              <el-input v-model="props2.row.coefficient0"
+                                        @input="(v)=>(props2.row.coefficient0=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))"/>
+                            </el-form-item>
+
+                            <el-form-item label="Coefficient for channel 2" style="margin: 0">
+                              <el-input v-model="props2.row.coefficient1"
+                                        @input="(v)=>(props2.row.coefficient1=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))"/>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="Onboard ADC Publisher Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.read_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - Onboard ADC
+                            </el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/ReadADC</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="header" style="margin: 0">
+                              <el-tag size="small">std_msgs/Header</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channel1" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channel2" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                          </el-form>
+                        </div>
+                      </div>
+
+                      <!-- PMU (CAN) -->
+                      <div v-if="props2.row.type === 10">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="PMU(CAN) Publisher Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.read_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - PMU</el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/ReadCANPMU</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="header" style="margin: 0">
+                              <el-tag size="small">std_msgs/Header</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="temperature" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="voltage" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="current" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                          </el-form>
+                        </div>
+                      </div>
                     </template>
                   </el-table-column>
 
@@ -504,6 +892,10 @@ export default {
   data() {
     return {
       examples: {
+        djirc: {
+          type: 0x01,
+          read_topic: ''
+        },
         lktech: {
           type: 0x02,
           can_inst: 1,
@@ -512,6 +904,16 @@ export default {
           control_type: 0x01,
           read_topic: '',
           write_topic: ''
+        },
+        hipnucimu_can: {
+          type: 0x03,
+          read_topic: ''
+        },
+        dshot: {
+          type: 0x04,
+          dshot_id: 1,
+          write_topic: '',
+          read_topic: ''
         },
         djican: {
           type: 0x05,
@@ -583,7 +985,38 @@ export default {
           ],
           read_topic: '',
           write_topic: '',
-        }
+        },
+        vanilla_pwm: {
+          type: 6,
+          tim_id: 2,
+          expected_period: 0,
+          init_value: 0,
+          write_topic: '',
+          read_topic: ''
+        },
+        external_pwm: {
+          type: 7,
+          uart_id: 1,
+          expected_period: 0,
+          enabled_channel_count: 1,
+          init_value: 0,
+          write_topic: '',
+          read_topic: ''
+        },
+        ms5876_30ba: {
+          type: 8,
+          read_topic: ''
+        },
+        adc: {
+          type: 9,
+          coefficient0: 0,
+          coefficient1: 0,
+          read_topic: ''
+        },
+        can_pmu: {
+          type: 10,
+          read_topic: ''
+        },
       },
       modules: [],
     }
@@ -608,6 +1041,8 @@ export default {
           return "Flight Module"
         case 0x02:
           return "Motor Module"
+        case 0x03:
+          return "H750 Universal Module"
       }
     },
     getAppTypeFriendlyName(hexId) {
@@ -617,11 +1052,21 @@ export default {
         case 0x02:
           return "LkTech Motor"
         case 0x03:
-          return "Hipnuc IMU CAN Version"
+          return "HIPNUC IMU(CAN)"
         case 0x04:
           return "DSHOT600"
         case 0x05:
           return "DJI Motor"
+        case 6:
+          return "OnBoard PWM"
+        case 7:
+          return "External PWM"
+        case 8:
+          return "MS5876(30BA)"
+        case 9:
+          return "ADC"
+        case 10:
+          return "PMU(CAN)"
       }
     },
     removeModule(idx) {
@@ -648,5 +1093,9 @@ export default {
 <style>
 .no_margin_bottom > .el-form-item {
   margin-bottom: 0 !important;
+}
+
+.with_margin_bottom > .el-button {
+  margin-bottom: 10px;
 }
 </style>
