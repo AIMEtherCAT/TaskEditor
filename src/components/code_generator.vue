@@ -70,6 +70,11 @@ export default {
     },
     loadAll() {
       this.update()
+      let textToSave = this.header
+      this.modules.forEach(module => {
+        textToSave += this.generateModuleDef(module)[0]
+      })
+      console.log(textToSave)
     },
     downloadAll() {
       let textToSave = this.header
@@ -149,12 +154,12 @@ export default {
       let pdoread_offset = 0
 
       res += `      task_count: !uint8_t ${module.task.length}\n`
-      res += `      latency_topic: !std::string '${module.latency_topic}'\n`
+      res += `      latency_pub_topic: !std::string '${module.latency_topic}'\n`
       res += '\n      tasks:\n'
 
       for (let i = 1; i <= module.task.length; i++) {
         res += `        - app_${i}:\n`
-        res += `            sdo_write_task_type: !uint8_t ${module.task[i - 1].type}\n`
+        res += `            sdowrite_task_type: !uint8_t ${module.task[i - 1].type}\n`
 
         switch (module.task[i - 1].type) {
           case 0x01: {
@@ -221,20 +226,20 @@ export default {
               sub_sdo_len += 1
               sub_res += `            sdowrite_motor${j}_control_type: !uint8_t ${module.task[i - 1].motor_control_type[j - 1]}\n`
               if (module.task[i - 1].motor_control_type[j - 1] > 1) {
-                sub_res += `            sdowrite_motor${j}_speed_pid_kp", (float ${module.task[i - 1].motor_speed_pid_param[j - 1].kp}\n`
-                sub_res += `            sdowrite_motor${j}_speed_pid_ki", (float ${module.task[i - 1].motor_speed_pid_param[j - 1].ki}\n`
-                sub_res += `            sdowrite_motor${j}_speed_pid_kd", (float ${module.task[i - 1].motor_speed_pid_param[j - 1].kd}\n`
-                sub_res += `            sdowrite_motor${j}_speed_pid_max_out", (float ${module.task[i - 1].motor_speed_pid_param[j - 1].maxout}\n`
-                sub_res += `            sdowrite_motor${j}_speed_pid_max_iout", (float ${module.task[i - 1].motor_speed_pid_param[j - 1].maxiout}\n`
+                sub_res += `            sdowrite_motor${j}_speed_pid_kp: !float ${module.task[i - 1].motor_speed_pid_param[j - 1].kp}\n`
+                sub_res += `            sdowrite_motor${j}_speed_pid_ki: !float ${module.task[i - 1].motor_speed_pid_param[j - 1].ki}\n`
+                sub_res += `            sdowrite_motor${j}_speed_pid_kd: !float ${module.task[i - 1].motor_speed_pid_param[j - 1].kd}\n`
+                sub_res += `            sdowrite_motor${j}_speed_pid_max_out: !float ${module.task[i - 1].motor_speed_pid_param[j - 1].maxout}\n`
+                sub_res += `            sdowrite_motor${j}_speed_pid_max_iout: !float ${module.task[i - 1].motor_speed_pid_param[j - 1].maxiout}\n`
                 sub_sdo_len += (4 * 5)
               }
 
               if (module.task[i - 1].motor_control_type[j - 1] > 2) {
-                sub_res += `            sdowrite_motor${j}_angle_pid_kp", (float ${module.task[i - 1].motor_angle_pid_param[j - 1].kp}\n`
-                sub_res += `            sdowrite_motor${j}_angle_pid_ki", (float ${module.task[i - 1].motor_angle_pid_param[j - 1].ki}\n`
-                sub_res += `            sdowrite_motor${j}_angle_pid_kd", (float ${module.task[i - 1].motor_angle_pid_param[j - 1].kd}\n`
-                sub_res += `            sdowrite_motor${j}_angle_pid_max_out", (float ${module.task[i - 1].motor_angle_pid_param[j - 1].maxout}\n`
-                sub_res += `            sdowrite_motor${j}_angle_pid_max_iout", (float ${module.task[i - 1].motor_angle_pid_param[j - 1].maxiout}\n`
+                sub_res += `            sdowrite_motor${j}_angle_pid_kp: !float ${module.task[i - 1].motor_angle_pid_param[j - 1].kp}\n`
+                sub_res += `            sdowrite_motor${j}_angle_pid_ki: !float ${module.task[i - 1].motor_angle_pid_param[j - 1].ki}\n`
+                sub_res += `            sdowrite_motor${j}_angle_pid_kd: !float ${module.task[i - 1].motor_angle_pid_param[j - 1].kd}\n`
+                sub_res += `            sdowrite_motor${j}_angle_pid_max_out: !float ${module.task[i - 1].motor_angle_pid_param[j - 1].maxout}\n`
+                sub_res += `            sdowrite_motor${j}_angle_pid_max_iout: !float ${module.task[i - 1].motor_angle_pid_param[j - 1].maxiout}\n`
                 sub_sdo_len += (4 * 5)
               }
               sub_res += '\n'
@@ -292,12 +297,8 @@ export default {
       }
 
       res = res.replaceAll('\r', '')
-      if (this.modules.indexOf(module) === this.modules.length - 1) {
-        res = res.substring(0, res.length - 2)
-        res += '\n'
-      }
       res = `      sdo_len: !uint16_t ${sdo_length + 1}\n` + res
-      res = `  - sn${module.sn}\n` + res
+      res = `  - sn${module.sn}:\n` + res
       return [(res + '\n'), sdo_length + 1, pdoread_offset, pdowrite_offset]
     }
   }
