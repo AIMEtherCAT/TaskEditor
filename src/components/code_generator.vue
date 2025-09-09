@@ -195,10 +195,11 @@ export default {
           }
           case 4: {
             res += `            sdowrite_dshot_id: !uint8_t ${module.task[i - 1].dshot_id}\n`
+            res += `            sdowrite_init_value: !uint16_t ${module.task[i - 1].init_value}\n`
             res += `            sub_topic: !std::string '${module.task[i - 1].write_topic || `/ecat/sn${module.sn}/app${i}/write`}'\n`
             res += `            pdowrite_offset: !uint16_t ${pdowrite_offset}\n`
 
-            sdo_length += 2
+            sdo_length += 4
             pdowrite_offset += 8
             break
           }
@@ -267,11 +268,25 @@ export default {
             pdowrite_offset += 8
             break
           }
+          case 7: {
+            res += `            sdowrite_uart_id: !uint8_t ${module.task[i - 1].uart_id}\n`
+            res += `            sdowrite_pwm_period: !uint16_t ${module.task[i - 1].expected_period}\n`
+            res += `            sdowrite_channel_num: !uint8_t ${module.task[i - 1].enabled_channel_count}\n`
+            res += `            sdowrite_init_value: !uint16_t ${module.task[i - 1].init_value}\n`
+            res += `            sub_topic: !std::string '${module.task[i - 1].write_topic || `/ecat/sn${module.sn}/app${i}/write`}'\n`
+            res += `            pdowrite_offset: !uint16_t ${pdowrite_offset}\n`
+
+            sdo_length += 7
+            pdowrite_offset += (module.task[i - 1].enabled_channel_count * 2)
+            break
+          }
           case 8: {
+            res += `            sdowrite_i2c_id: !uint8_t ${module.task[i - 1].i2c_id}\n`
+            res += `            sdowrite_osr_id: !uint8_t ${module.task[i - 1].osr_id}\n`
             res += `            pub_topic: !std::string '${module.task[i - 1].read_topic || `/ecat/sn${module.sn}/app${i}/read`}'\n`
             res += `            pdoread_offset: !uint16_t ${pdoread_offset}\n`
 
-            sdo_length += 1
+            sdo_length += 3
             pdoread_offset += 8
             break
           }

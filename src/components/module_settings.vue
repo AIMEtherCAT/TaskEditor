@@ -4,7 +4,7 @@
     <div style="text-align: center">
       <!-- TODO: finish flight module -->
       <!--      <el-button @click="modules.push({type: 0x01, task: []})">Flight Module</el-button>-->
-      <el-button @click="modules.push({type: 0x02, task: [], latency_topic: '', sn: ''})" disabled>Motor Module</el-button>
+<!--      <el-button @click="modules.push({type: 0x02, task: [], latency_topic: '', sn: ''})" disabled>Motor Module</el-button>-->
       <el-button @click="modules.push({type: 0x03, task: [], latency_topic: '', sn: ''})">H750 Universal Module</el-button>
     </div>
 
@@ -26,13 +26,13 @@
               <div class="text item with_margin_bottom" style="margin: 30px">
                 <el-divider content-position="left">Add Task</el-divider>
                 <el-button @click="props.row.task.push(deepClone(examples.djirc))">DJI RC</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>
+<!--                <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>-->
                 <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.dshot))">DShot</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.dshot))">DSHOT600</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.djican))">DJI Motor</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.vanilla_pwm))">OnBoard PWM</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.external_pwm))">ExternalBoard PWM</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.ms5876_30ba))">MS5876(30BA)</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN)</el-button>
 
@@ -376,6 +376,12 @@
                               </el-radio-group>
                             </el-form-item>
 
+                            <el-form-item label="Initial Value" style="margin: 0">
+                              <el-input v-model="props2.row.init_value"
+                                        @input="(v)=>(props2.row.init_value=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))">
+                              </el-input>
+                            </el-form-item>
+
                             <el-divider content-position="left">ROS2 Configuration</el-divider>
                             <el-form-item label="Motor Command Subscriber Topic Name" style="margin: 0">
                               <el-input v-model="props2.row.write_topic"
@@ -494,7 +500,7 @@
                               <el-form-item v-show="props2.row.motor_enable[i-1]" :label="`Motor${i} Control Type`"
                                             style="margin: 0">
                                 <el-radio-group v-model="props2.row.motor_control_type[i-1]">
-                                  <el-radio :label="0x01">Closeloop Current</el-radio>
+                                  <el-radio :label="0x01">Openloop Current</el-radio>
                                   <el-radio :label="0x02">Speed</el-radio>
                                   <el-radio :label="0x03">Single-Round Position</el-radio>
                                 </el-radio-group>
@@ -680,7 +686,7 @@
                         <div class="text item" style="margin: 30px">
                           <el-form label-position="left" label-width="50%" size="small">
 
-                            <el-divider content-position="left">UART Configuration</el-divider>
+                            <el-divider content-position="left">Task Configuration</el-divider>
                             <el-form-item label="UART" style="margin: 0">
                               <el-radio-group v-model="props2.row.uart_id">
                                 <el-radio :label="1">UART1</el-radio>
@@ -729,19 +735,31 @@
                         </div>
                       </div>
 
-                      <!-- MS5876(30BA) -->
+                      <!-- MS5837(30BA) -->
                       <div v-if="props2.row.type === 8">
                         <div class="text item" style="margin: 30px">
                           <el-form label-position="left" label-width="50%" size="small">
+
+                            <el-divider content-position="left">Task Configuration</el-divider>
+                            <el-form-item label="I2C" style="margin: 0">
+                              <el-radio-group v-model="props2.row.i2c_id">
+                                <el-radio :label="3">I2C3</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
+
+                            <el-form-item label="OSR ID" style="margin: 0">
+                              <el-input-number v-model="props2.row.osr_id" :min="1" :max="6" />
+                            </el-form-item>
+
                             <el-divider content-position="left">ROS2 Configuration</el-divider>
-                            <el-form-item label="MS5876(30BA) Publisher Topic Name" style="margin: 0">
+                            <el-form-item label="MS5837(30BA) Publisher Topic Name" style="margin: 0">
                               <el-input v-model="props2.row.read_topic"
                                         :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
                             </el-form-item>
 
-                            <el-divider content-position="left">ROS2 Message Definition - MS5876(30BA)</el-divider>
+                            <el-divider content-position="left">ROS2 Message Definition - MS5837(30BA)</el-divider>
                             <el-form-item label="Message Type" style="margin: 0">
-                              <el-tag>custom_msgs/ReadMS5876BA30</el-tag>
+                              <el-tag>custom_msgs/ReadMS5837BA30</el-tag>
                             </el-form-item>
                             <el-divider/>
                             <el-form-item class="havetag" label="header" style="margin: 0">
@@ -913,7 +931,8 @@ export default {
           type: 0x04,
           dshot_id: 1,
           write_topic: '',
-          read_topic: ''
+          read_topic: '',
+          init_value: 0
         },
         djican: {
           type: 0x05,
@@ -1003,8 +1022,10 @@ export default {
           write_topic: '',
           read_topic: ''
         },
-        ms5876_30ba: {
+        ms5837_30ba: {
           type: 8,
+          i2c_id: 3,
+          osr_id: 1,
           read_topic: ''
         },
         adc: {
@@ -1062,7 +1083,7 @@ export default {
         case 7:
           return "External PWM"
         case 8:
-          return "MS5876(30BA)"
+          return "MS5837(30BA)"
         case 9:
           return "ADC"
         case 10:
