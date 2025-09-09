@@ -308,6 +308,14 @@ export default {
             pdoread_offset += 6
             break
           }
+          case 11: {
+            res += `            pub_topic: !std::string '${module.task[i - 1].read_topic || `/ecat/sn${module.sn}/app${i}/read`}'\n`
+            res += `            pdoread_offset: !uint16_t ${pdoread_offset}\n`
+
+            sdo_length += 1
+            pdoread_offset += 24
+            break
+          }
         }
       }
 

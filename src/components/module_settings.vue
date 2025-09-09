@@ -35,6 +35,7 @@
                 <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN)</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.sbus_rc))">SBUS RC</el-button>
 
 
                 <el-divider content-position="left">Module Task Detail Configuration</el-divider>
@@ -847,6 +848,46 @@
                           </el-form>
                         </div>
                       </div>
+
+                      <!-- SBUS RC -->
+                      <div v-if="props2.row.type === 11">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="SBUS RC Publisher Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.read_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - SBUS RC</el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/ReadSBUSRC</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="header" style="margin: 0">
+                              <el-tag size="small">std_msgs/Header</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="online" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="channels" style="margin: 0">
+                              <el-tag size="small">uint16[16]</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="ch17" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="ch18" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="fail_safe" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="frame_lost" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                          </el-form>
+                        </div>
+                      </div>
                     </template>
                   </el-table-column>
 
@@ -912,6 +953,10 @@ export default {
       examples: {
         djirc: {
           type: 0x01,
+          read_topic: ''
+        },
+        sbus_rc: {
+          type: 11,
           read_topic: ''
         },
         lktech: {
@@ -1088,6 +1133,8 @@ export default {
           return "ADC"
         case 10:
           return "PMU(CAN)"
+        case 11:
+          return "SBUS RC"
       }
     },
     removeModule(idx) {
