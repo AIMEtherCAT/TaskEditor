@@ -26,7 +26,7 @@
               <div class="text item with_margin_bottom" style="margin: 30px">
                 <el-divider content-position="left">Add Task</el-divider>
                 <el-button @click="props.row.task.push(deepClone(examples.djirc))">DJI RC</el-button>
-<!--                <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>-->
+                <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.dshot))">DSHOT600</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.djican))">DJI Motor</el-button>
