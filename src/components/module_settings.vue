@@ -925,16 +925,6 @@
                                 </template>
                               </el-input>
                             </el-form-item>
-                            <el-form-item label="P Max">
-                              <el-input v-model="props2.row.pmax"/>
-                            </el-form-item>
-                            <el-form-item label="V Max">
-                              <el-input v-model="props2.row.vmax"/>
-                            </el-form-item>
-                            <el-form-item label="T Max">
-                            <el-input v-model="props2.row.tmax" />
-                          </el-form-item>
-
 
                             <el-divider content-position="left">Motor Configuration</el-divider>
                             <el-alert
@@ -953,6 +943,15 @@
                                 <el-radio :label="0x02">Position With Speed Limit</el-radio>
                                 <el-radio :label="0x03">Speed</el-radio>
                               </el-radio-group>
+                            </el-form-item>
+                            <el-form-item label="P Max">
+                              <el-input v-model="props2.row.pmax"/>
+                            </el-form-item>
+                            <el-form-item label="V Max">
+                              <el-input v-model="props2.row.vmax"/>
+                            </el-form-item>
+                            <el-form-item label="T Max">
+                              <el-input v-model="props2.row.tmax" />
                             </el-form-item>
 
                             <el-divider content-position="left">ROS2 Configuration</el-divider>
