@@ -316,6 +316,28 @@ export default {
             pdoread_offset += 24
             break
           }
+          case 12: {
+            res += `            sdowrite_control_period: !uint16_t ${module.task[i - 1].control_period}\n`
+            res += `            sdowrite_can_id: !uint32_t ${this.toHexStringWithPrefix(module.task[i - 1].can_id)}\n`
+            res += `            sdowrite_master_id: !uint32_t ${this.toHexStringWithPrefix(module.task[i - 1].master_id)}\n`
+            res += `            sdowrite_can_inst: !uint8_t ${module.task[i - 1].can_inst}\n`
+            res += `            sdowrite_control_type: !uint8_t ${module.task[i - 1].control_type}\n`
+            res += `            sdowrite_pmax: !float ${module.task[i - 1].pmax}\n`
+            res += `            sdowrite_vmax: !float ${module.task[i - 1].vmax}\n`
+            res += `            sdowrite_tmax: !float ${module.task[i - 1].tmax}\n`
+            res += `            pub_topic: !std::string '${module.task[i - 1].read_topic || `/ecat/sn${module.sn}/app${i}/read`}'\n`
+            res += `            sub_topic: !std::string '${module.task[i - 1].write_topic || `/ecat/sn${module.sn}/app${i}/write`}'\n`
+            res += `            pdoread_offset: !uint16_t ${pdoread_offset}\n`
+            res += `            pdowrite_offset: !uint16_t ${pdowrite_offset}\n`
+            sdo_length += 13
+            pdoread_offset += 9
+            if (module.task[i - 1].control_type === 0 || module.task[i - 1].control_type === 1) {
+              pdowrite_offset += 9
+            } else if (module.task[i - 1].control_type === 2) {
+              pdowrite_offset += 5
+            }
+            break
+          }
         }
       }
 

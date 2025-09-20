@@ -36,6 +36,7 @@
                 <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.sbus_rc))">SBUS RC</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.dm_motor))">DM Motor</el-button>
 
 
                 <el-divider content-position="left">Module Task Detail Configuration</el-divider>
@@ -888,6 +889,188 @@
                           </el-form>
                         </div>
                       </div>
+
+                      <!-- DM MOTOR -->
+                      <div v-if="props2.row.type === 12">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+
+                            <el-divider content-position="left">Task Configuration</el-divider>
+                            <el-form-item label="Control Period">
+                              <el-input-number v-model="props2.row.control_period" :max="16384" :min="1"/>
+                              ms
+                            </el-form-item>
+
+                            <el-divider content-position="left">CAN Configuration</el-divider>
+                            <el-form-item label="CAN" style="margin: 0">
+                              <el-radio-group v-model="props2.row.can_inst">
+                                <el-radio :label="1">CAN1</el-radio>
+                                <el-radio :label="2">CAN2</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
+                            <el-form-item label="CAN Baudrate" style="margin: 0">
+                              <el-tag>1 Mbit/s</el-tag>
+                            </el-form-item>
+                            <el-form-item label="CAN ID">
+                              <el-input v-model="props2.row.can_id">
+                                <template slot="prefix">
+                                  0x
+                                </template>
+                              </el-input>
+                            </el-form-item>
+                            <el-form-item label="Master ID">
+                              <el-input v-model="props2.row.master_id">
+                                <template slot="prefix">
+                                  0x
+                                </template>
+                              </el-input>
+                            </el-form-item>
+                            <el-form-item label="P Max">
+                              <el-input v-model="props2.row.pmax"/>
+                            </el-form-item>
+                            <el-form-item label="V Max">
+                              <el-input v-model="props2.row.vmax"/>
+                            </el-form-item>
+                            <el-form-item label="T Max">
+                            <el-input v-model="props2.row.tmax" />
+                          </el-form-item>
+
+
+                            <el-divider content-position="left">Motor Configuration</el-divider>
+                            <el-alert
+                                :closable="false"
+                                style="margin-bottom: 20px;"
+                                type="info"
+                            >
+                              <template slot="title">
+                                More information about DM Motor Protocol can be cound at <a
+                                  href="https://gl1po2nscb.feishu.cn/wiki/MZ32w0qnnizTpOkNvAZcJ9SlnXb">https://gl1po2nscb.feishu.cn/wiki/MZ32w0qnnizTpOkNvAZcJ9SlnXb</a>
+                              </template>
+                            </el-alert>
+                            <el-form-item label="Control Type" style="margin: 0">
+                              <el-radio-group v-model="props2.row.control_type">
+                                <el-radio :label="0x01">MIT</el-radio>
+                                <el-radio :label="0x02">Position With Speed Limit</el-radio>
+                                <el-radio :label="0x03">Speed</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="Motor Feedback Publisher Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.read_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Motor Command Subscriber Topic Name" style="margin: 0">
+                              <el-input v-model="props2.row.write_topic"
+                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/write`"></el-input>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - Motor Feedback</el-divider>
+                            <el-form-item label="Message Type" style="margin: 0">
+                              <el-tag>custom_msgs/ReadDmMotor</el-tag>
+                            </el-form-item>
+                            <el-divider/>
+                            <el-form-item class="havetag" label="header" style="margin: 0">
+                              <el-tag size="small">std_msgs/Header</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="disabled" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="enabled" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="overvoltage" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="overcurrent" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="mos_overtemperature" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="rotor_overtemperature" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="communication_lost" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="overload" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="ecd" style="margin: 0">
+                              <el-tag size="small">uint16</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="velocity" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="torque" style="margin: 0">
+                              <el-tag size="small">float32</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="mos_temperature" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="rotor_temperature" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+
+                            <el-divider content-position="left">ROS2 Message Definition - Motor Control Command
+                            </el-divider>
+                            <div v-show="props2.row.control_type === 0x01">
+                              <el-form-item label="Message Type" style="margin: 0">
+                                <el-tag>custom_msgs/WriteDmMotorMITControl</el-tag>
+                              </el-form-item>
+                              <el-divider/>
+                              <el-form-item class="havetag" label="enable" style="margin: 0">
+                                <el-tag size="small">uint8</el-tag>
+                              </el-form-item>
+                              <el-form-item class="havetag" label="p_des" style="margin: 0">
+                                <el-tag size="small">float32</el-tag>
+                              </el-form-item>
+                              <el-form-item class="havetag" label="v_des" style="margin: 0">
+                                <el-tag size="small">float32</el-tag>
+                              </el-form-item>
+                              <el-form-item class="havetag" label="kp" style="margin: 0">
+                                <el-tag size="small">float32</el-tag>
+                              </el-form-item>
+                              <el-form-item class="havetag" label="kd" style="margin: 0">
+                                <el-tag size="small">float32</el-tag>
+                              </el-form-item>
+                              <el-form-item class="havetag" label="torque" style="margin: 0">
+                                <el-tag size="small">float32</el-tag>
+                              </el-form-item>
+                            </div>
+
+                            <div v-show="props2.row.control_type === 0x02">
+                              <el-form-item label="Message Type" style="margin: 0">
+                                <el-tag>custom_msgs/WriteDmMotorPositionControlWithSpeedLimit</el-tag>
+                              </el-form-item>
+                              <el-divider/>
+                              <el-form-item class="havetag" label="enable" style="margin: 0">
+                                <el-tag size="small">uint8</el-tag>
+                              </el-form-item>
+                              <el-form-item class="havetag" label="position" style="margin: 0">
+                                <el-tag size="small">float32</el-tag>
+                              </el-form-item>
+                              <el-form-item class="havetag" label="speed" style="margin: 0">
+                                <el-tag size="small">float32</el-tag>
+                              </el-form-item>
+                            </div>
+
+                            <div v-show="props2.row.control_type === 0x03">
+                              <el-form-item label="Message Type" style="margin: 0">
+                                <el-tag>custom_msgs/WriteDmMotorSpeedControl</el-tag>
+                              </el-form-item>
+                              <el-divider/>
+                              <el-form-item class="havetag" label="enable" style="margin: 0">
+                                <el-tag size="small">uint8</el-tag>
+                              </el-form-item>
+                              <el-form-item class="havetag" label="speed" style="margin: 0">
+                                <el-tag size="small">float32</el-tag>
+                              </el-form-item>
+                            </div>
+                          </el-form>
+                        </div>
+                      </div>
                     </template>
                   </el-table-column>
 
@@ -1083,6 +1266,17 @@ export default {
           type: 10,
           read_topic: ''
         },
+        dm_motor: {
+          type: 12,
+          can_inst: 1,
+          can_id: '01',
+          master_id: '11',
+          control_period: 1,
+          control_type: 1,
+          pmax: 12.5,
+          vmax: 30,
+          tmax: 10
+        }
       },
       modules: [],
     }
@@ -1135,6 +1329,8 @@ export default {
           return "PMU(CAN)"
         case 11:
           return "SBUS RC"
+        case 12:
+          return "DM Motor"
       }
     },
     removeModule(idx) {
