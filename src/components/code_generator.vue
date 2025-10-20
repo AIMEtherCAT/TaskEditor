@@ -318,8 +318,8 @@ export default {
           }
           case 12: {
             res += `            sdowrite_control_period: !uint16_t ${module.task[i - 1].control_period}\n`
-            res += `            sdowrite_can_id: !uint32_t ${this.toHexStringWithPrefix(module.task[i - 1].can_id)}\n`
-            res += `            sdowrite_master_id: !uint32_t ${this.toHexStringWithPrefix(module.task[i - 1].master_id)}\n`
+            res += `            sdowrite_can_id: !uint16_t ${this.toHexStringWithPrefix(module.task[i - 1].can_id)}\n`
+            res += `            sdowrite_master_id: !uint16_t ${this.toHexStringWithPrefix(module.task[i - 1].master_id)}\n`
             res += `            sdowrite_can_inst: !uint8_t ${module.task[i - 1].can_inst}\n`
             res += `            sdowrite_control_type: !uint8_t ${module.task[i - 1].control_type}\n`
             res += `            sdowrite_pmax: !float ${module.task[i - 1].pmax}\n`
@@ -329,7 +329,7 @@ export default {
             res += `            sub_topic: !std::string '${module.task[i - 1].write_topic || `/ecat/sn${module.sn}/app${i}/write`}'\n`
             res += `            pdoread_offset: !uint16_t ${pdoread_offset}\n`
             res += `            pdowrite_offset: !uint16_t ${pdowrite_offset}\n`
-            sdo_length += 13
+            sdo_length += 9
             pdoread_offset += 9
             if (module.task[i - 1].control_type === 0 || module.task[i - 1].control_type === 1) {
               pdowrite_offset += 9
