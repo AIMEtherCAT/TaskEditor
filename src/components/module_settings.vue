@@ -4,8 +4,9 @@
     <div style="text-align: center">
       <!-- TODO: finish flight module -->
       <!--      <el-button @click="modules.push({type: 0x01, task: []})">Flight Module</el-button>-->
-<!--      <el-button @click="modules.push({type: 0x02, task: [], latency_topic: '', sn: ''})" disabled>Motor Module</el-button>-->
-      <el-button @click="modules.push({type: 0x03, task: [], latency_topic: '', sn: ''})">H750 Universal Module</el-button>
+      <!--      <el-button @click="modules.push({type: 0x02, task: [], latency_topic: '', sn: ''})" disabled>Motor Module</el-button>-->
+      <el-button @click="modules.push({type: 0x03, task: [], latency_topic: '', sn: ''})">H750 Universal Module
+      </el-button>
     </div>
 
     <el-divider>
@@ -26,6 +27,10 @@
               <div class="text item with_margin_bottom" style="margin: 30px">
                 <el-divider content-position="left">Add Task</el-divider>
                 <el-button @click="props.row.task.push(deepClone(examples.djirc))">DJI RC</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.sbus_rc))">SBUS RC</el-button>
+                <el-divider direction="vertical"/>
+                <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
+
                 <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.dshot))">DSHOT600</el-button>
@@ -35,7 +40,6 @@
                 <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN)</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.sbus_rc))">SBUS RC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.dm_motor))">DM Motor</el-button>
 
 
@@ -350,7 +354,42 @@
                       <div v-if="props2.row.type === 3">
                         <div class="text item" style="margin: 30px">
                           <el-form label-position="left" label-width="50%" size="small">
+                            <el-divider content-position="left">CAN Configuration</el-divider>
+                            <el-form-item label="CAN" style="margin: 0">
+                              <el-radio-group v-model="props2.row.can_inst">
+                                <el-radio :label="1">CAN1</el-radio>
+                                <el-radio :label="2">CAN2</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
+                            <el-form-item label="CAN Baudrate" style="margin: 0">
+                              <el-tag>1 Mbit/s</el-tag>
+                            </el-form-item>
+                            <el-form-item label="Packet1 ID">
+                              <el-input v-model="props2.row.packet1_id">
+                                <template slot="prefix">
+                                  0x
+                                </template>
+                              </el-input>
+                            </el-form-item>
+                            <el-form-item label="Packet2 ID">
+                              <el-input v-model="props2.row.packet2_id">
+                                <template slot="prefix">
+                                  0x
+                                </template>
+                              </el-input>
+                            </el-form-item>
+                            <el-form-item label="Packet3 ID">
+                              <el-input v-model="props2.row.packet3_id">
+                                <template slot="prefix">
+                                  0x
+                                </template>
+                              </el-input>
+                            </el-form-item>
+
                             <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <el-form-item label="Frame name" style="margin: 0">
+                              <el-input v-model="props2.row.frame_name"></el-input>
+                            </el-form-item>
                             <el-form-item label="HIPNUC IMU Publisher Topic Name" style="margin: 0">
                               <el-input v-model="props2.row.read_topic"
                                         :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>
@@ -697,7 +736,7 @@
                             </el-form-item>
 
                             <el-form-item label="Enabled Channel Count" style="margin: 0">
-                              <el-input-number v-model="props2.row.enabled_channel_count" :min="1" :max="16" />
+                              <el-input-number v-model="props2.row.enabled_channel_count" :min="1" :max="16"/>
                             </el-form-item>
 
                             <el-form-item label="Period" style="margin: 0">
@@ -750,7 +789,7 @@
                             </el-form-item>
 
                             <el-form-item label="OSR ID" style="margin: 0">
-                              <el-input-number v-model="props2.row.osr_id" :min="1" :max="6" />
+                              <el-input-number v-model="props2.row.osr_id" :min="1" :max="6"/>
                             </el-form-item>
 
                             <el-divider content-position="left">ROS2 Configuration</el-divider>
@@ -951,7 +990,7 @@
                               <el-input v-model="props2.row.vmax"/>
                             </el-form-item>
                             <el-form-item label="T Max">
-                              <el-input v-model="props2.row.tmax" />
+                              <el-input v-model="props2.row.tmax"/>
                             </el-form-item>
 
                             <el-divider content-position="left">ROS2 Configuration</el-divider>
@@ -1152,7 +1191,12 @@ export default {
         },
         hipnucimu_can: {
           type: 0x03,
-          read_topic: ''
+          read_topic: '',
+          frame_name: 'imu_link',
+          can_inst: 1,
+          packet1_id: 0x01,
+          packet2_id: 0x02,
+          packet3_id: 0x03,
         },
         dshot: {
           type: 0x04,

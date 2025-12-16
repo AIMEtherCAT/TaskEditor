@@ -25,9 +25,16 @@
         <div slot="header" class="clearfix">
           Slave <b><u>{{ modules.indexOf(module) }}</u></b> - sn <b><u>{{ module.sn }}</u></b> -
           <b><u>{{ getTypeFriendlyName(module.type) }}</u></b>
-          <el-tag v-if="generateModuleDef(module)[2] > getPdoLen(module.type)[0]" type="danger" size="small" style="margin-left: 10px">TXPDO (slv to master) Overflow {{ generateModuleDef(module)[2] }} / 80</el-tag>
-          <el-tag v-if="generateModuleDef(module)[3] > getPdoLen(module.type)[1]" type="danger" size="small" style="margin-left: 10px">RXPDO (master to slv) Overflow {{ generateModuleDef(module)[3] }} / 80</el-tag>
-          <el-tag v-if="!(generateModuleDef(module)[3] > getPdoLen(module.type)[1] || generateModuleDef(module)[2] > getPdoLen(module.type)[0])" type="success" size="small" style="margin-left: 10px">OK</el-tag>
+          <el-tag v-if="generateModuleDef(module)[2] > getPdoLen(module.type)[0]" type="danger" size="small"
+                  style="margin-left: 10px">TXPDO (slv to master) Overflow {{ generateModuleDef(module)[2] }} / 80
+          </el-tag>
+          <el-tag v-if="generateModuleDef(module)[3] > getPdoLen(module.type)[1]" type="danger" size="small"
+                  style="margin-left: 10px">RXPDO (master to slv) Overflow {{ generateModuleDef(module)[3] }} / 80
+          </el-tag>
+          <el-tag
+              v-if="!(generateModuleDef(module)[3] > getPdoLen(module.type)[1] || generateModuleDef(module)[2] > getPdoLen(module.type)[0])"
+              type="success" size="small" style="margin-left: 10px">OK
+          </el-tag>
         </div>
         <div class="text item code" style="white-space: pre-wrap;">{{ generateModuleDef(module)[0] }}</div>
       </el-card>
@@ -186,11 +193,16 @@ export default {
             break
           }
           case 3: {
+            res += `            sdowrite_can_inst: !uint8_t ${module.task[i - 1].can_inst}\n`
+            res += `            sdowrite_packet1_id: !uint32_t ${module.task[i - 1].packet1_id}\n`
+            res += `            sdowrite_packet2_id: !uint32_t ${module.task[i - 1].packet2_id}\n`
+            res += `            sdowrite_packet3_id: !uint32_t ${module.task[i - 1].packet3_id}\n`
+            res += `            sdowrite_frame_name: !std::string ${module.task[i - 1].frame_name}\n`
             res += `            pub_topic: !std::string '${module.task[i - 1].read_topic || `/ecat/sn${module.sn}/app${i}/read`}'\n`
             res += `            pdoread_offset: !uint16_t ${pdoread_offset}\n`
 
-            sdo_length += 1
-            pdoread_offset += (8+8+5)
+            sdo_length += 14
+            pdoread_offset += (8 + 8 + 5)
             break
           }
           case 4: {
