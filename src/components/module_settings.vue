@@ -28,20 +28,21 @@
                 <el-divider content-position="left">Add Task</el-divider>
                 <el-button @click="props.row.task.push(deepClone(examples.djirc))">DJI RC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.sbus_rc))">SBUS RC</el-button>
+
                 <el-divider direction="vertical"/>
                 <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA) *UNTESTED</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC *UNTESTED</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN) *UNTESTED</el-button>
 
-                <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
+                <el-divider direction="vertical"/>
                 <el-button @click="props.row.task.push(deepClone(examples.dshot))">DSHOT600</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.djican))">DJI Motor</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.vanilla_pwm))">OnBoard PWM</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.external_pwm))">ExternalBoard PWM</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA)</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.dm_motor))">DM Motor</el-button>
 
+                <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.vanilla_pwm))">OnBoard PWM</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.external_pwm))">ExternalBoard PWM</el-button>
 
                 <el-divider content-position="left">Module Task Detail Configuration</el-divider>
                 <el-table
@@ -669,10 +670,10 @@
                           <el-form label-position="left" label-width="50%" size="small">
 
                             <el-divider content-position="left">TIM Configuration</el-divider>
-                            <el-form-item label="TIM" style="margin: 0">
-                              <el-radio-group v-model="props2.row.tim_id">
-                                <el-radio :label="2">TIM2</el-radio>
-                                <el-radio :label="5">TIM5</el-radio>
+                            <el-form-item label="Port" style="margin: 0">
+                              <el-radio-group v-model="props2.row.port_id">
+                                <el-radio :label="1">Port1</el-radio>
+                                <el-radio :label="2">Port2</el-radio>
                               </el-radio-group>
                             </el-form-item>
 
@@ -1278,7 +1279,7 @@ export default {
         },
         vanilla_pwm: {
           type: 6,
-          tim_id: 2,
+          port_id: 1,
           expected_period: 0,
           init_value: 0,
           write_topic: '',

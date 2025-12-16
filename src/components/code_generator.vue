@@ -234,7 +234,7 @@ export default {
               if (!module.task[i - 1].motor_enable[j - 1]) {
                 continue;
               }
-              pdoread_len += 7
+              pdoread_len += 9
               pdowrite_len += 3
               sub_sdo_len += 1
               sub_res += `            sdowrite_motor${j}_control_type: !uint8_t ${module.task[i - 1].motor_control_type[j - 1]}\n`
@@ -270,7 +270,7 @@ export default {
             break
           }
           case 6: {
-            res += `            sdowrite_tim_id: !uint8_t ${module.task[i - 1].tim_id}\n`
+            res += `            sdowrite_port_id: !uint8_t ${module.task[i - 1].port_id}\n`
             res += `            sdowrite_pwm_period: !uint16_t ${module.task[i - 1].expected_period}\n`
             res += `            sdowrite_init_value: !uint16_t ${module.task[i - 1].init_value}\n`
             res += `            sub_topic: !std::string '${module.task[i - 1].write_topic || `/ecat/sn${module.sn}/app${i}/write`}'\n`
