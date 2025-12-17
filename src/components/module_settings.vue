@@ -39,10 +39,10 @@
                 <el-button @click="props.row.task.push(deepClone(examples.dshot))">DSHOT600</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.djican))">DJI Motor</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.dm_motor))">DM Motor</el-button>
-
                 <el-button @click="props.row.task.push(deepClone(examples.lktech))">LkTech Motor</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.vanilla_pwm))">OnBoard PWM</el-button>
-                <el-button @click="props.row.task.push(deepClone(examples.external_pwm))">ExternalBoard PWM</el-button>
+
+                <el-button @click="props.row.task.push(deepClone(examples.external_pwm))">ExternalBoard PWM *UNTESTED</el-button>
 
                 <el-divider content-position="left">Module Task Detail Configuration</el-divider>
                 <el-table
