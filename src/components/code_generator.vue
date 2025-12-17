@@ -188,8 +188,34 @@ export default {
             res += `            pdowrite_offset: !uint16_t ${pdowrite_offset}\n`
 
             sdo_length += 9
-            pdoread_offset += 7
-            pdowrite_offset += 7
+            pdoread_offset += 8
+            switch (Number(module.task[i - 1].control_type)) {
+              case 0x01:
+              case 0x02: {
+                pdowrite_offset += 3
+                break
+              }
+              case 0x03: {
+                pdowrite_offset += 7
+                break
+              }
+              case 0x04: {
+                pdowrite_offset += 5
+                break
+              }
+              case 0x05: {
+                pdowrite_offset += 7
+                break
+              }
+              case 0x06: {
+                pdowrite_offset += 6
+                break
+              }
+              case 0x07: {
+                pdowrite_offset += 8
+              }
+            }
+
             break
           }
           case 3: {
