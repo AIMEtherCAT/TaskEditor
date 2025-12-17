@@ -182,12 +182,8 @@
                             <el-form-item label="CAN Baudrate" style="margin: 0">
                               <el-tag>1 Mbit/s</el-tag>
                             </el-form-item>
-                            <el-form-item label="CAN Packet ID">
-                              <el-input v-model="props2.row.can_packet_id">
-                                <template slot="prefix">
-                                  0x
-                                </template>
-                              </el-input>
+                            <el-form-item label="Motor Driver ID">
+                              <el-input-number :min="1" :max="32" v-model="props2.row.motor_id" />
                             </el-form-item>
 
                             <el-divider content-position="left">Motor Configuration</el-divider>
@@ -230,6 +226,12 @@
                             <el-divider/>
                             <el-form-item class="havetag" label="header" style="margin: 0">
                               <el-tag size="small">std_msgs/Header</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="online" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
+                            </el-form-item>
+                            <el-form-item class="havetag" label="enabled" style="margin: 0">
+                              <el-tag size="small">uint8</el-tag>
                             </el-form-item>
                             <el-form-item class="havetag" label="current" style="margin: 0">
                               <el-tag size="small">int16</el-tag>
@@ -641,6 +643,9 @@
                                 <el-tag size="small">int16</el-tag>
                               </el-form-item>
                               <el-form-item :label="`motor${i}_temperature`" class="havetag" style="margin: 0">
+                                <el-tag size="small">uint8</el-tag>
+                              </el-form-item>
+                              <el-form-item :label="`motor${i}_error_code`" class="havetag" style="margin: 0">
                                 <el-tag size="small">uint8</el-tag>
                               </el-form-item>
                             </div>
@@ -1184,6 +1189,7 @@ export default {
         lktech: {
           type: 0x02,
           can_inst: 1,
+          motor_id: 1,
           can_packet_id: 0x141,
           control_period: 1,
           control_type: 0x01,

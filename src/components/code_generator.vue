@@ -179,7 +179,7 @@ export default {
           }
           case 0x02: {
             res += `            sdowrite_control_period: !uint16_t ${module.task[i - 1].control_period}\n`
-            res += `            sdowrite_can_packet_id: !uint32_t ${this.toHexStringWithPrefix(module.task[i - 1].can_packet_id)}\n`
+            res += `            sdowrite_can_packet_id: !uint32_t ${this.toHexStringWithPrefix(Number(module.task[i - 1].motor_id) + 0x140)}\n`
             res += `            sdowrite_can_inst: !uint8_t ${module.task[i - 1].can_inst}\n`
             res += `            sdowrite_control_type: !uint8_t ${module.task[i - 1].control_type}\n`
             res += `            pub_topic: !std::string '${module.task[i - 1].read_topic || `/ecat/sn${module.sn}/app${i}/read`}'\n`
