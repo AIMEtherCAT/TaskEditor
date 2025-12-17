@@ -213,6 +213,7 @@ export default {
               }
               case 0x07: {
                 pdowrite_offset += 8
+                break
               }
             }
 
