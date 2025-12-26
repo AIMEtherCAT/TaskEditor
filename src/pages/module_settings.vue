@@ -606,7 +606,21 @@
                               </el-radio-group>
                             </el-form-item>
 
-                            <number-input field="pmax" :row="props2.row" label="PMax"/>
+                            <el-alert
+                                :closable="false"
+                                style="margin-bottom: 5px;"
+                                type="info"
+                            >
+                              <template slot="title">
+                                Please set the <u><b>PMax</b></u> to <u><b>PI</b></u> using the DMTools software for best ecd accuracy.
+                              </template>
+                            </el-alert>
+                            <el-form-item label="PMax">
+                              <el-input
+                                  v-model="props2.row.pmax"
+                                  disabled
+                              />
+                            </el-form-item>
                             <number-input field="vmax" :row="props2.row" label="VMax"/>
                             <number-input field="tmax" :row="props2.row" label="TMax"/>
 
@@ -902,7 +916,7 @@ export default {
           master_id: '11',
           control_period: 1,
           control_type: 1,
-          pmax: 12.5,
+          pmax: 3.141592653589793,
           vmax: 30,
           tmax: 10,
           connection_lost_read_action: 0x01,
