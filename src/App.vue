@@ -3,11 +3,11 @@
     <el-page-header content="University of Nottingham EtherCAT Module Configuration" style="margin-bottom: 10px;"/>
     <el-tabs v-model="activeName" :before-leave="call_update" stretch>
       <el-tab-pane label="Module Settings" name="assignment">
-        <new-generator/>
+        <module-settings/>
       </el-tab-pane>
 
       <el-tab-pane label="Config Generator" name="generator">
-        <code-gen ref="generator"/>
+        <code-generator ref="generator"/>
       </el-tab-pane>
     </el-tabs>
 
@@ -15,20 +15,20 @@
       <div class="c_top">
         <div class="xh">Made<br>with love</div>
       </div>
-      <div>2025.05 v2.0</div>
+      <div>2025.12 v2.1</div>
     </div>
   </div>
 </template>
 
 <script>
-import ModuleSettings from "@/components/module_settings.vue";
-import CodeGenerator from "@/components/code_generator.vue";
+import ModuleSettings from "@/pages/module_settings.vue";
+import CodeGenerator from "@/pages/code_generator.vue";
 
 export default {
   name: 'TaskAssignment',
   components: {
-    NewGenerator: ModuleSettings,
-    codeGen: CodeGenerator
+    ModuleSettings,
+    CodeGenerator
   },
   mounted() {
     document.title = 'TaskAssignment'
