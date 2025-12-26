@@ -612,7 +612,8 @@
                                 type="info"
                             >
                               <template slot="title">
-                                Please set the <u><b>PMax</b></u> to <u><b>PI</b></u> using the DMTools software for best ecd accuracy.
+                                Please set the <u><b>PMax</b></u> to <u><b>PI</b></u> using the DMTools software for
+                                best ecd accuracy.
                               </template>
                             </el-alert>
                             <el-form-item label="PMax">
