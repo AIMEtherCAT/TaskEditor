@@ -150,9 +150,9 @@ export function generateModuleDef(module) {
                 res += append_item(6, 'sdowrite_control_period', 'uint16_t', task_info.control_period)
                 res += append_item(6, 'sdowrite_can_packet_id', 'uint32_t', toHexStringWithPrefix(task_info.can_packet_id))
                 res += append_item(6, 'sdowrite_motor1_can_id', 'uint32_t', task_info.motor_enable[0] ? toHexStringWithPrefix(get_dji_motor_report_id(toHexStringWithPrefix(task_info.can_packet_id), task_info.motor_id[0])) : 0)
-                res += append_item(6, 'sdowrite_motor1_can_id', 'uint32_t', task_info.motor_enable[1] ? toHexStringWithPrefix(get_dji_motor_report_id(toHexStringWithPrefix(task_info.can_packet_id), task_info.motor_id[1])) : 0)
-                res += append_item(6, 'sdowrite_motor1_can_id', 'uint32_t', task_info.motor_enable[2] ? toHexStringWithPrefix(get_dji_motor_report_id(toHexStringWithPrefix(task_info.can_packet_id), task_info.motor_id[2])) : 0)
-                res += append_item(6, 'sdowrite_motor1_can_id', 'uint32_t', task_info.motor_enable[3] ? toHexStringWithPrefix(get_dji_motor_report_id(toHexStringWithPrefix(task_info.can_packet_id), task_info.motor_id[3])) : 0)
+                res += append_item(6, 'sdowrite_motor2_can_id', 'uint32_t', task_info.motor_enable[1] ? toHexStringWithPrefix(get_dji_motor_report_id(toHexStringWithPrefix(task_info.can_packet_id), task_info.motor_id[1])) : 0)
+                res += append_item(6, 'sdowrite_motor3_can_id', 'uint32_t', task_info.motor_enable[2] ? toHexStringWithPrefix(get_dji_motor_report_id(toHexStringWithPrefix(task_info.can_packet_id), task_info.motor_id[2])) : 0)
+                res += append_item(6, 'sdowrite_motor4_can_id', 'uint32_t', task_info.motor_enable[3] ? toHexStringWithPrefix(get_dji_motor_report_id(toHexStringWithPrefix(task_info.can_packet_id), task_info.motor_id[3])) : 0)
                 res += append_item(6, 'sdowrite_can_inst', 'uint8_t', task_info.can_inst)
 
                 let pdoread_len = 0
