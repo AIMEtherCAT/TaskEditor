@@ -31,8 +31,8 @@
     <el-form-item class="havetag" label="overload" style="margin: 0">
       <el-tag size="small">uint8</el-tag>
     </el-form-item>
-    <el-form-item class="havetag" label="ecd" style="margin: 0">
-      <el-tag size="small">uint16</el-tag>
+    <el-form-item class="havetag" label="position" style="margin: 0">
+      <el-tag size="small">float32</el-tag>
     </el-form-item>
     <el-form-item class="havetag" label="velocity" style="margin: 0">
       <el-tag size="small">float32</el-tag>
