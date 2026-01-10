@@ -90,8 +90,19 @@
                             <el-divider content-position="left">CAN Configuration</el-divider>
                             <can-selector :row="props2.row"/>
 
+                            <el-alert
+                                :closable="false"
+                                style="margin-bottom: 20px;"
+                                type="info"
+                            >
+                              <template slot="title">
+                                If you are using broadcast mode, ignore this column as the driver ID will be fixed to
+                                1-4 in this mode.
+                              </template>
+                            </el-alert>
                             <el-form-item label="Motor Driver ID">
-                              <el-input-number :min="1" :max="32" v-model="props2.row.motor_id"/>
+                              <el-input-number :min="1" :max="32" v-model="props2.row.motor_id"
+                                               :disabled="props2.row.control_type === 0x08"/>
                             </el-form-item>
 
                             <el-divider content-position="left">Motor Configuration</el-divider>
@@ -106,7 +117,12 @@
                               </template>
                             </el-alert>
                             <el-form-item label="Control Type">
-                              <el-radio-group v-model="props2.row.control_type">
+                              <el-radio-group v-model="props2.row.control_type" style="width: 100%"
+                                              @change="()=>{if (props2.row.control_type === 0x08) {props2.row.motor_id = 1}}">
+                                <el-divider>Broadcast mode</el-divider>
+                                <el-radio :label="0x08">Current</el-radio>
+
+                                <el-divider>Single motor mode</el-divider>
                                 <el-radio :label="0x01">Openloop Current</el-radio>
                                 <br>
                                 <el-radio :label="0x02" style="margin-top: 5px">Torque</el-radio>
@@ -135,7 +151,8 @@
                                 sub-label="Motor Command"/>
 
                             <el-divider content-position="left">ROS2 Message Definition - Motor Feedback</el-divider>
-                            <ReadLkMotor/>
+                            <ReadLkMotor v-if="props2.row.control_type !== 0x08"/>
+                            <ReadLkMotorMulti v-else />
 
                             <el-divider content-position="left">ROS2 Message Definition - Motor Control Command
                             </el-divider>
@@ -149,6 +166,7 @@
                             <WriteLkMotorSingleRoundPositionControl v-else-if="props2.row.control_type === 0x06"/>
                             <WriteLkMotorSingleRoundPositionControlWithSpeedLimit
                                 v-else-if="props2.row.control_type === 0x07"/>
+                            <WriteLkMotorBroadcastCurrentControl v-else-if="props2.row.control_type === 0x08"/>
                           </el-form>
                         </div>
                       </div>
@@ -722,6 +740,8 @@ import PortSelector from "@/components/PortSelector.vue";
 import ReadDJIRC from "@/components/message_types/ReadDJIRC.vue";
 import ReadLkMotor from "@/components/message_types/ReadLkMotor.vue";
 import WriteLkMotorOpenloopControl from "@/components/message_types/WriteLkMotorOpenloopControl.vue";
+import WriteLkMotorBroadcastCurrentControl from "@/components/message_types/WriteLkMotorBroadcastCurrentControl.vue";
+import ReadLkMotorMulti from "@/components/message_types/ReadLkMotorMulti.vue";
 import WriteLkMotorTorqueControl from "@/components/message_types/WriteLkMotorTorqueControl.vue";
 import WriteLkMotorMultiRoundPositionControl
   from "@/components/message_types/WriteLkMotorMultiRoundPositionControl.vue";
@@ -738,6 +758,8 @@ export default {
     WriteLkMotorMultiRoundPositionControl,
     WriteLkMotorTorqueControl,
     WriteLkMotorOpenloopControl,
+    WriteLkMotorBroadcastCurrentControl,
+    ReadLkMotorMulti,
     ReadLkMotor,
     ReadDJIRC,
     PortSelector,

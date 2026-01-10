@@ -92,11 +92,18 @@ export function generateModuleDef(module) {
             // lk motor
             case 0x02: {
                 res += append_item(6, 'sdowrite_control_period', 'uint16_t', task_info.control_period)
-                res += append_item(6, 'sdowrite_can_packet_id', 'uint32_t', toHexStringWithPrefix(Number(task_info.motor_id) + 0x140))
+                if (Number(task_info.control_type) !== 0x08) {
+                    res += append_item(6, 'sdowrite_can_packet_id', 'uint32_t', toHexStringWithPrefix(Number(task_info.motor_id) + 0x140))
+                }
                 res += append_item(6, 'sdowrite_can_inst', 'uint8_t', task_info.can_inst)
                 res += append_item(6, 'sdowrite_control_type', 'uint8_t', task_info.control_type)
 
-                pdoread_offset += 8
+                if (Number(task_info.control_type) !== 0x08) {
+                    pdoread_offset += 8
+                } else {
+                    pdoread_offset += 32
+                }
+
                 switch (Number(task_info.control_type)) {
                     case 0x01:
                     case 0x02: {
@@ -120,6 +127,10 @@ export function generateModuleDef(module) {
                         break
                     }
                     case 0x07: {
+                        pdowrite_offset += 8
+                        break
+                    }
+                    case 0x08: {
                         pdowrite_offset += 8
                         break
                     }
