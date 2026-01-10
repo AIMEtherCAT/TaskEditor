@@ -266,9 +266,9 @@ export function generateModuleDef(module) {
                 res += append_item(6, 'conf_tmax', 'float', task_info.tmax)
 
                 pdoread_offset += 9
-                if (task_info.control_type === 0 || task_info.control_type === 1) {
+                if (task_info.control_type === 0x01 || task_info.control_type === 0x02) {
                     pdowrite_offset += 9
-                } else if (task_info.control_type === 2) {
+                } else if (task_info.control_type === 0x03) {
                     pdowrite_offset += 5
                 }
                 break
