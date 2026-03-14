@@ -7,7 +7,7 @@ This project is a Vue-based web application designed for configuring EtherCAT mo
 * **Module Management**: Add and manage multiple EtherCAT slave modules by Serial Number (SN).
 * **Task Assignment**: Assign various hardware tasks to each module, including:
   * **Remote Controllers**: DJI RC, SBUS RC.
-  * **Sensors**: HIPNUC IMU (CAN).
+  * **Sensors**: HIPNUC IMU (CAN), SUPER CAP (CAN).
   * **Actuators**: DJI Motors, DM Motors, LkTech Motors, DSHOT600, OnBoard PWM.
 * **Task Configuration**: Modify the configuration items of each task.
 * **ROS2 Integration**: Customize publisher and subscriber topic names for seamless communication with ROS2.

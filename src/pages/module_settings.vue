@@ -29,6 +29,7 @@
                 <el-button @click="props.row.task.push(deepClone(examples.djirc))">DJI RC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.sbus_rc))">SBUS RC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
+                <el-button @click="props.row.task.push(deepClone(examples.super_cap))">SUPER CAP(CAN)</el-button>
                 <!--                <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA) *UNTESTED-->
                 <!--                </el-button>-->
                 <!--                <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC *UNTESTED</el-button>-->
@@ -152,7 +153,7 @@
 
                             <el-divider content-position="left">ROS2 Message Definition - Motor Feedback</el-divider>
                             <ReadLkMotor v-if="props2.row.control_type !== 0x08"/>
-                            <ReadLkMotorMulti v-else />
+                            <ReadLkMotorMulti v-else/>
 
                             <el-divider content-position="left">ROS2 Message Definition - Motor Control Command
                             </el-divider>
@@ -663,6 +664,43 @@
                           </el-form>
                         </div>
                       </div>
+
+                      <!-- SUPER CAP -->
+                      <div v-else-if="props2.row.type === 13">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+
+                            <el-divider content-position="left">Task Configuration</el-divider>
+                            <connection-lost-action-selector v-model="props2.row.connection_lost_write_action"
+                                                             label="Control"/>
+                            <connection-lost-action-selector v-model="props2.row.connection_lost_read_action"
+                                                             label="Report"/>
+
+                            <el-divider content-position="left">CAN Configuration</el-divider>
+
+                            <can-selector :row="props2.row"/>
+                            <hex-input field="chassis_to_cap_id" :row="props2.row" label="Capacitor Control Packet ID"/>
+                            <hex-input field="cap_to_chassis_id" :row="props2.row" label="Capacitor Report Packet ID"/>
+
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <ros2-topic-name-input
+                                :sub="true"
+                                :pub="true"
+                                :row="props2"
+                                :sn="props.row.sn"
+                                pub-label="Capacitor Feedback"
+                                sub-label="Capacitor Command"/>
+
+                            <el-divider content-position="left">ROS2 Message Definition - Capacitor Feedback
+                            </el-divider>
+                            <ReadSuperCap/>
+
+                            <el-divider content-position="left">ROS2 Message Definition - Capacitor Control Command
+                            </el-divider>
+                            <WriteSuperCap/>
+                          </el-form>
+                        </div>
+                      </div>
                     </template>
                   </el-table-column>
 
@@ -749,6 +787,8 @@ import WriteLkMotorMultiRoundPositionControlWithSpeedLimit
   from "@/components/message_types/WriteLkMotorMultiRoundPositionControlWithSpeedLimit.vue";
 import WriteLkMotorSingleRoundPositionControlWithSpeedLimit
   from "@/components/message_types/WriteLkMotorSingleRoundPositionControlWithSpeedLimit.vue";
+import ReadSuperCap from "@/components/message_types/ReadSuperCap.vue";
+import WriteSuperCap from "@/components/message_types/WriteSuperCap.vue";
 
 export default {
   name: 'NewTaskAssignment',
@@ -777,7 +817,9 @@ export default {
     WriteDmMotorSpeedControl,
     WriteDmMotorPositionControlWithSpeedLimit,
     ReadSBUSRC,
-    WriteOnBoardPWM
+    WriteOnBoardPWM,
+    WriteSuperCap,
+    ReadSuperCap
   },
   data() {
     return {
@@ -946,6 +988,14 @@ export default {
           connection_lost_write_action: 0x01,
           read_topic: '',
           write_topic: ''
+        },
+        super_cap: {
+          type: 13,
+          can_inst: 1,
+          chassis_to_cap_id: '01',
+          cap_to_chassis_id: '02',
+          connection_lost_read_action: 0x01,
+          connection_lost_write_action: 0x01,
         }
       },
       modules: [],
@@ -1002,6 +1052,8 @@ export default {
           return "SBUS RC"
         case 12:
           return "DM Motor"
+        case 13:
+          return "Super Capacitor"
       }
     },
     removeModule(idx) {

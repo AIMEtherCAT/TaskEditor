@@ -273,6 +273,16 @@ export function generateModuleDef(module) {
                 }
                 break
             }
+            // super cap
+            case 13: {
+                res += append_item(6, 'sdowrite_can_inst', 'uint8_t', task_info.can_inst)
+                res += append_item(6, 'sdowrite_chassis_to_cap_id', 'uint32_t', toHexStringWithPrefix(`0x${task_info.chassis_to_cap_id}`))
+                res += append_item(6, 'sdowrite_cap_to_chassis_id', 'uint32_t', toHexStringWithPrefix(`0x${task_info.cap_to_chassis_id}`))
+
+                pdoread_offset += 7
+                pdowrite_offset += 4
+                break
+            }
         }
     }
 
