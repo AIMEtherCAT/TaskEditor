@@ -996,6 +996,8 @@ export default {
           cap_to_chassis_id: '02',
           connection_lost_read_action: 0x01,
           connection_lost_write_action: 0x01,
+          read_topic: '',
+          write_topic: ''
         }
       },
       modules: [],
