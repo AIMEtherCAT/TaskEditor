@@ -87,6 +87,8 @@ export default {
           //   return "Motor Module"
         case 0x03:
           return "H750 Universal Module"
+        case 0x04:
+          return "H750 Universal Module (Large PDO V.)"
       }
     },
     // read, write
@@ -94,6 +96,8 @@ export default {
       switch (hexId) {
         case 0x03:
           return [80, 80]
+        case 0x04:
+          return [112, 80]
       }
     },
     downloadAll() {

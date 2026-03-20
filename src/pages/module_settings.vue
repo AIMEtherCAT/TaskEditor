@@ -7,6 +7,8 @@
       <!--      <el-button @click="modules.push({type: 0x02, task: [], latency_topic: '', sn: ''})" disabled>Motor Module</el-button>-->
       <el-button @click="modules.push({type: 0x03, task: [], latency_topic: '', sn: ''})">H750 Universal Module
       </el-button>
+      <el-button @click="modules.push({type: 0x04, task: [], latency_topic: '', sn: ''})">H750 Universal Module (Large PDO V.)
+      </el-button>
     </div>
 
     <el-divider>
@@ -1026,6 +1028,8 @@ export default {
           //   return "Motor Module"
         case 0x03:
           return "H750 Universal Module"
+        case 0x04:
+          return "H750 Universal Module (Large PDO V.)"
       }
     },
     getAppTypeFriendlyName(hexId) {
