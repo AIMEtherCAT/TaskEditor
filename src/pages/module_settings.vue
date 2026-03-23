@@ -859,7 +859,7 @@ export default {
           connection_lost_read_action: 0x01,
         },
         djivt13: {
-          type: 0x01,
+          type: 14,
           read_topic: '',
           connection_lost_read_action: 0x01,
         },
