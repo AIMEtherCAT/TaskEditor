@@ -284,8 +284,7 @@ export function generateModuleDef(module) {
                 break
             }
             case 14: {
-                // TODO: find out how long this message is
-                // pdoread_offset += 
+                pdoread_offset += 21
             }
         }
     }

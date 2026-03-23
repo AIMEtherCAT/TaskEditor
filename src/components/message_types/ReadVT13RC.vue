@@ -7,25 +7,22 @@
         <el-form-item class="havetag" label="header" style="margin: 0">
             <el-tag size="small">std_msgs/Header</el-tag>
         </el-form-item>
-        <el-form-item class="havetag" label="online" style="margin: 0">
+        <el-form-item class="havetag" label="right_joystick_x" style="margin: 0">
+                <el-tag size="small">float32</el-tag>
+        </el-form-item>
+        <el-form-item class="havetag" label="right_joystick_y" style="margin: 0">
+                <el-tag size="small">float32</el-tag>
+        </el-form-item>
+        <el-form-item class="havetag" label="left_joystick_x" style="margin: 0">
+                <el-tag size="small">float32</el-tag>
+        </el-form-item>
+        <el-form-item class="havetag" label="left_joystick_y" style="margin: 0">
+                <el-tag size="small">float32</el-tag>
+        </el-form-item>
+        <el-form-item class="havetag" label="gear_switching" style="margin: 0">
                 <el-tag size="small">uint8</el-tag>
         </el-form-item>
-        <el-form-item class="havetag" label="right_x" style="margin: 0">
-                <el-tag size="small">unit16</el-tag>
-        </el-form-item>
-        <el-form-item class="havetag" label="right_y" style="margin: 0">
-                <el-tag size="small">uint16</el-tag>
-        </el-form-item>
-        <el-form-item class="havetag" label="left_x" style="margin: 0">
-                <el-tag size="small">uint16</el-tag>
-        </el-form-item>
-        <el-form-item class="havetag" label="left_y" style="margin: 0">
-                <el-tag size="small">uint16</el-tag>
-        </el-form-item>
-        <el-form-item class="havetag" label="mode_switch" style="margin: 0">
-                <el-tag size="small">uint8</el-tag>
-        </el-form-item>
-        <el-form-item class="havetag" label="pause" style="margin: 0">
+        <el-form-item class="havetag" label="pause_button" style="margin: 0">
                 <el-tag size="small">uint8</el-tag>
         </el-form-item>
         <el-form-item class="havetag" label="left_btn" style="margin: 0">
@@ -35,19 +32,19 @@
                 <el-tag size="small">uint8</el-tag>
         </el-form-item>
         <el-form-item class="havetag" label="dial" style="margin: 0">
-                <el-tag size="small">uint16</el-tag>
+                <el-tag size="small">float32</el-tag>
         </el-form-item>
         <el-form-item class="havetag" label="trigger" style="margin: 0">
                 <el-tag size="small">uint8</el-tag>
         </el-form-item>
         <el-form-item class="havetag" label="mouse_x" style="margin: 0">
-                <el-tag size="small">int16</el-tag>
+                <el-tag size="small">float32</el-tag>
         </el-form-item>
         <el-form-item class="havetag" label="mouse_y" style="margin: 0">
-                <el-tag size="small">int16</el-tag>
+                <el-tag size="small">float32</el-tag>
         </el-form-item>
-        <el-form-item class="havetag" label="mouse_z" style="margin: 0">
-                <el-tag size="small">int16</el-tag>
+        <el-form-item class="havetag" label="mouse_wheel" style="margin: 0">
+                <el-tag size="small">float32</el-tag>
         </el-form-item>
         <el-form-item class="havetag" label="mouse_left" style="margin: 0">
                 <el-tag size="small">uint8</el-tag>
@@ -56,9 +53,6 @@
                 <el-tag size="small">uint8</el-tag>
         </el-form-item>
         <el-form-item class="havetag" label="mouse_middle" style="margin: 0">
-                <el-tag size="small">uint8</el-tag>
-        </el-form-item>
-        <el-form-item class="havetag" label="mouse_right" style="margin: 0">
                 <el-tag size="small">uint8</el-tag>
         </el-form-item>
         <el-form-item class="havetag" label="w" style="margin: 0">
