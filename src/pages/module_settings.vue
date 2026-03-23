@@ -828,6 +828,7 @@ export default {
     ReadLkMotorMulti,
     ReadLkMotor,
     ReadDJIRC,
+    ReadVT13,
     PortSelector,
     NumberInput,
     CanSelector,
