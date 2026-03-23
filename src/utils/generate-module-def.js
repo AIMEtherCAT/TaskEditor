@@ -283,6 +283,10 @@ export function generateModuleDef(module) {
                 pdowrite_offset += 4
                 break
             }
+            case 14: {
+                // TODO: find out how long this message is
+                // pdoread_offset += 
+            }
         }
     }
 
