@@ -801,7 +801,7 @@ import ControlPeriodInput from "@/components/ControlPeriodInput.vue";
 import NumberInput from "@/components/NumberInput.vue";
 import PortSelector from "@/components/PortSelector.vue";
 import ReadDJIRC from "@/components/message_types/ReadDJIRC.vue";
-import ReadVT13 from "@/conponents/message_types/ReadVT13RC.vue"
+import ReadVT13 from "@/components/message_types/ReadVT13RC.vue"
 import ReadLkMotor from "@/components/message_types/ReadLkMotor.vue";
 import WriteLkMotorOpenloopControl from "@/components/message_types/WriteLkMotorOpenloopControl.vue";
 import WriteLkMotorBroadcastCurrentControl from "@/components/message_types/WriteLkMotorBroadcastCurrentControl.vue";
