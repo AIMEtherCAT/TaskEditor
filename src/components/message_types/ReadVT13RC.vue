@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-form-item label="Message Type" style="margin: 0">
-            <el-tag>custom_msgs/ReadDT17RC</el-tag>
+            <el-tag>custom_msgs/ReadVT13RC</el-tag>
         </el-form-item>
         <el-divider/>
         <el-form-item class="havetag" label="header" style="margin: 0">
