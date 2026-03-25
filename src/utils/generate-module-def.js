@@ -284,7 +284,7 @@ export function generateModuleDef(module) {
                 break
             }
             case 14: {
-                pdoread_offset += 21
+                pdoread_offset += 17
             }
         }
     }
