@@ -219,16 +219,13 @@ export function generateModuleDef(module) {
             //     break
             // }
             // ms5876 30ba
-            // case 8: {
-            //     res += `            sdowrite_i2c_id: !uint8_t ${task_info.i2c_id}\n`
-            //     res += `            sdowrite_osr_id: !uint8_t ${task_info.osr_id}\n`
-            //     res += `            pub_topic: !std::string '${task_info.read_topic || `/ecat/sn${module.sn}/app${i}/read`}'\n`
-            //     res += `            pdoread_offset: !uint16_t ${pdoread_offset}\n`
-            //
-            //     sdo_length += 3
-            //     pdoread_offset += 8
-            //     break
-            // }
+            case 8: {
+                res += `            sdowrite_i2c_id: !uint8_t ${task_info.i2c_id}\n`
+                res += `            sdowrite_osr_id: !uint8_t ${task_info.osr_id}\n`
+
+                pdoread_offset += 9
+                break
+            }
             // adc
             // case 9: {
             //     res += `            sdowrite_channel1_coefficient_per_volt: !float ${task_info.coefficient0}\n`
@@ -241,14 +238,10 @@ export function generateModuleDef(module) {
             //     break
             // }
             // can pmu
-            // case 10: {
-            //     res += `            pub_topic: !std::string '${task_info.read_topic || `/ecat/sn${module.sn}/app${i}/read`}'\n`
-            //     res += `            pdoread_offset: !uint16_t ${pdoread_offset}\n`
-            //
-            //     sdo_length += 1
-            //     pdoread_offset += 6
-            //     break
-            // }
+            case 10: {
+                pdoread_offset += 7
+                break
+            }
             // sbus
             case 11: {
                 pdoread_offset += 24

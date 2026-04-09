@@ -7,7 +7,8 @@
       <!--      <el-button @click="modules.push({type: 0x02, task: [], latency_topic: '', sn: ''})" disabled>Motor Module</el-button>-->
       <el-button @click="modules.push({type: 0x03, task: [], latency_topic: '', sn: ''})">H750 Universal Module
       </el-button>
-      <el-button @click="modules.push({type: 0x04, task: [], latency_topic: '', sn: ''})">H750 Universal Module (Large PDO V.)
+      <el-button @click="modules.push({type: 0x04, task: [], latency_topic: '', sn: ''})">H750 Universal Module (Large
+        PDO V.)
       </el-button>
     </div>
 
@@ -32,10 +33,9 @@
                 <el-button @click="props.row.task.push(deepClone(examples.sbus_rc))">SBUS RC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.super_cap))">SUPER CAP(CAN)</el-button>
-                <!--                <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA) *UNTESTED-->
-                <!--                </el-button>-->
+                <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA)</el-button>
                 <!--                <el-button @click="props.row.task.push(deepClone(examples.adc))">OnBoard ADC *UNTESTED</el-button>-->
-                <!--                <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN) *UNTESTED</el-button>-->
+                <el-button @click="props.row.task.push(deepClone(examples.can_pmu))">PMU(CAN)</el-button>
 
                 <el-divider direction="vertical"/>
                 <el-button @click="props.row.task.push(deepClone(examples.djican))">DJI Motor</el-button>
@@ -468,44 +468,37 @@
                       <!--                      </div>-->
 
                       <!-- MS5837(30BA) -->
-                      <!--                      <div v-if="props2.row.type === 8">-->
-                      <!--                        <div class="text item" style="margin: 30px">-->
-                      <!--                          <el-form label-position="left" label-width="50%" size="small">-->
+                      <div v-if="props2.row.type === 8">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+                            <el-divider content-position="left">Task Configuration</el-divider>
 
-                      <!--                            <el-divider content-position="left">Task Configuration</el-divider>-->
-                      <!--                            <el-form-item label="I2C" style="margin: 0">-->
-                      <!--                              <el-radio-group v-model="props2.row.i2c_id">-->
-                      <!--                                <el-radio :label="3">I2C3</el-radio>-->
-                      <!--                              </el-radio-group>-->
-                      <!--                            </el-form-item>-->
+                            <connection-lost-action-selector v-model="props2.row.connection_lost_read_action"
+                                                             label="Report"/>
 
-                      <!--                            <el-form-item label="OSR ID" style="margin: 0">-->
-                      <!--                              <el-input-number v-model="props2.row.osr_id" :min="1" :max="6"/>-->
-                      <!--                            </el-form-item>-->
+                            <el-form-item label="I2C" style="margin: 0">
+                              <el-radio-group v-model="props2.row.i2c_id">
+                                <el-radio :label="3">I2C3</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
 
-                      <!--                            <el-divider content-position="left">ROS2 Configuration</el-divider>-->
-                      <!--                            <el-form-item label="MS5837(30BA) Publisher Topic Name" style="margin: 0">-->
-                      <!--                              <el-input v-model="props2.row.read_topic"-->
-                      <!--                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/read`"></el-input>-->
-                      <!--                            </el-form-item>-->
+                            <el-form-item label="OSR ID" style="margin: 0">
+                              <el-input-number v-model="props2.row.osr_id" :min="1" :max="6"/>
+                            </el-form-item>
 
-                      <!--                            <el-divider content-position="left">ROS2 Message Definition - MS5837(30BA)</el-divider>-->
-                      <!--                            <el-form-item label="Message Type" style="margin: 0">-->
-                      <!--                              <el-tag>custom_msgs/ReadMS5837BA30</el-tag>-->
-                      <!--                            </el-form-item>-->
-                      <!--                            <el-divider/>-->
-                      <!--                            <el-form-item class="havetag" label="header" style="margin: 0">-->
-                      <!--                              <el-tag size="small">std_msgs/Header</el-tag>-->
-                      <!--                            </el-form-item>-->
-                      <!--                            <el-form-item class="havetag" label="temperature" style="margin: 0">-->
-                      <!--                              <el-tag size="small">float64</el-tag>-->
-                      <!--                            </el-form-item>-->
-                      <!--                            <el-form-item class="havetag" label="pressure" style="margin: 0">-->
-                      <!--                              <el-tag size="small">float64</el-tag>-->
-                      <!--                            </el-form-item>-->
-                      <!--                          </el-form>-->
-                      <!--                        </div>-->
-                      <!--                      </div>-->
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <ros2-topic-name-input
+                                :sub="false"
+                                :pub="true"
+                                :row="props2"
+                                :sn="props.row.sn"
+                                pub-label="MS5837(30BA)"/>
+
+                            <el-divider content-position="left">ROS2 Message Definition - MS5837(30BA)</el-divider>
+                            <ReadMS5837BA30/>
+                          </el-form>
+                        </div>
+                      </div>
 
                       <!-- OnBoard ADC -->
                       <!--                      <div v-if="props2.row.type === 9">-->
@@ -550,22 +543,26 @@
                       <!--                      </div>-->
 
                       <!-- PMU (CAN) -->
-                      <!--                      <div v-else-if="props2.row.type === 10">-->
-                      <!--                        <div class="text item" style="margin: 30px">-->
-                      <!--                          <el-form label-position="left" label-width="50%" size="small">-->
-                      <!--                            <el-divider content-position="left">ROS2 Configuration</el-divider>-->
-                      <!--                            <ros2-topic-name-input-->
-                      <!--                                :sub="false"-->
-                      <!--                                :pub="true"-->
-                      <!--                                :row="props2"-->
-                      <!--                                :sn="props.row.sn"-->
-                      <!--                                pub-label="PMU(CAN)"/>-->
+                      <div v-else-if="props2.row.type === 10">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
+                            <el-divider content-position="left">Task Configuration</el-divider>
+                            <connection-lost-action-selector v-model="props2.row.connection_lost_read_action"
+                                                             label="Report"/>
 
-                      <!--                            <el-divider content-position="left">ROS2 Message Definition - PMU</el-divider>-->
-                      <!--                            <ReadCANPMU />-->
-                      <!--                          </el-form>-->
-                      <!--                        </div>-->
-                      <!--                      </div>-->
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <ros2-topic-name-input
+                                :sub="false"
+                                :pub="true"
+                                :row="props2"
+                                :sn="props.row.sn"
+                                pub-label="PMU(CAN)"/>
+
+                            <el-divider content-position="left">ROS2 Message Definition - PMU</el-divider>
+                            <ReadCANPMU/>
+                          </el-form>
+                        </div>
+                      </div>
 
                       <!-- SBUS RC -->
                       <div v-else-if="props2.row.type === 11">
@@ -782,6 +779,7 @@ import ReadLkMotor from "@/components/message_types/ReadLkMotor.vue";
 import WriteLkMotorOpenloopControl from "@/components/message_types/WriteLkMotorOpenloopControl.vue";
 import WriteLkMotorBroadcastCurrentControl from "@/components/message_types/WriteLkMotorBroadcastCurrentControl.vue";
 import ReadLkMotorMulti from "@/components/message_types/ReadLkMotorMulti.vue";
+import ReadMS5837BA30 from "@/components/message_types/ReadMS5837BA30.vue";
 import WriteLkMotorTorqueControl from "@/components/message_types/WriteLkMotorTorqueControl.vue";
 import WriteLkMotorMultiRoundPositionControl
   from "@/components/message_types/WriteLkMotorMultiRoundPositionControl.vue";
@@ -791,10 +789,12 @@ import WriteLkMotorSingleRoundPositionControlWithSpeedLimit
   from "@/components/message_types/WriteLkMotorSingleRoundPositionControlWithSpeedLimit.vue";
 import ReadSuperCap from "@/components/message_types/ReadSuperCap.vue";
 import WriteSuperCap from "@/components/message_types/WriteSuperCap.vue";
+import ReadCANPMU from "@/components/message_types/ReadCANPMU.vue";
 
 export default {
   name: 'NewTaskAssignment',
   components: {
+    ReadCANPMU,
     WriteLkMotorSingleRoundPositionControlWithSpeedLimit,
     WriteLkMotorMultiRoundPositionControlWithSpeedLimit,
     WriteLkMotorMultiRoundPositionControl,
@@ -805,6 +805,7 @@ export default {
     ReadLkMotor,
     ReadDJIRC,
     PortSelector,
+    ReadMS5837BA30,
     NumberInput,
     CanSelector,
     HexInput,
