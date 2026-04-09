@@ -45,8 +45,7 @@
                 <el-button @click="props.row.task.push(deepClone(examples.dshot))">DSHOT600</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.vanilla_pwm))">OnBoard PWM</el-button>
 
-                <!--                <el-button @click="props.row.task.push(deepClone(examples.external_pwm))">ExternalBoard PWM *UNTESTED-->
-                <!--                </el-button>-->
+                <el-button @click="props.row.task.push(deepClone(examples.external_pwm))">ExternalBoard PWM</el-button>
 
                 <el-divider content-position="left">Module Task Detail Configuration</el-divider>
                 <el-table
@@ -414,58 +413,44 @@
                       </div>
 
                       <!-- ExternalBoard PWM -->
-                      <!--                      <div v-if="props2.row.type === 7">-->
-                      <!--                        <div class="text item" style="margin: 30px">-->
-                      <!--                          <el-form label-position="left" label-width="50%" size="small">-->
+                      <div v-if="props2.row.type === 7">
+                        <div class="text item" style="margin: 30px">
+                          <el-form label-position="left" label-width="50%" size="small">
 
-                      <!--                            <el-divider content-position="left">Task Configuration</el-divider>-->
-                      <!--                            <el-form-item label="UART" style="margin: 0">-->
-                      <!--                              <el-radio-group v-model="props2.row.uart_id">-->
-                      <!--                                <el-radio :label="1">UART1</el-radio>-->
-                      <!--                                <el-radio :label="4">UART4</el-radio>-->
-                      <!--                              </el-radio-group>-->
-                      <!--                            </el-form-item>-->
+                            <el-divider content-position="left">Task Configuration</el-divider>
+                            <connection-lost-action-selector v-model="props2.row.connection_lost_write_action"
+                                                             label="Control"/>
 
-                      <!--                            <el-form-item label="Enabled Channel Count" style="margin: 0">-->
-                      <!--                              <el-input-number v-model="props2.row.enabled_channel_count" :min="1" :max="16"/>-->
-                      <!--                            </el-form-item>-->
+                            <el-form-item label="UART" style="margin: 0">
+                              <el-radio-group v-model="props2.row.uart_id">
+                                <el-radio :label="1">UART1</el-radio>
+                                <el-radio :label="4">UART4</el-radio>
+                              </el-radio-group>
+                            </el-form-item>
 
-                      <!--                            <el-form-item label="Period" style="margin: 0">-->
-                      <!--                              <el-input v-model="props2.row.expected_period"-->
-                      <!--                                        @input="(v)=>(props2.row.expected_period=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))">-->
-                      <!--                                <template slot="append">-->
-                      <!--                                  us-->
-                      <!--                                </template>-->
-                      <!--                              </el-input>-->
-                      <!--                            </el-form-item>-->
+                            <el-form-item label="Enabled Channel Count" style="margin: 0">
+                              <el-input-number v-model="props2.row.enabled_channel_count" :min="1"
+                                               :max="16"/>
+                            </el-form-item>
 
-                      <!--                            <el-form-item label="Initial Value" style="margin: 0">-->
-                      <!--                              <el-input v-model="props2.row.init_value"-->
-                      <!--                                        @input="(v)=>(props2.row.init_value=v.replace(/^\D*(\d*(?:\.\d{0,})?).*$/g, '$1'))">-->
-                      <!--                                <template slot="append">-->
-                      <!--                                  us-->
-                      <!--                                </template>-->
-                      <!--                              </el-input>-->
-                      <!--                            </el-form-item>-->
+                            <number-input field="expected_period" :row="props2.row" label="Period" unit="us"/>
+                            <number-input field="init_value" :row="props2.row" label="Initial Value" unit="us"/>
 
-                      <!--                            <el-divider content-position="left">ROS2 Configuration</el-divider>-->
-                      <!--                            <el-form-item label="Motor Command Subscriber Topic Name" style="margin: 0">-->
-                      <!--                              <el-input v-model="props2.row.write_topic"-->
-                      <!--                                        :placeholder="`/ecat/sn${props.row.sn}/app${props2.$index+1}/write`"></el-input>-->
-                      <!--                            </el-form-item>-->
+                            <el-divider content-position="left">ROS2 Configuration</el-divider>
+                            <ros2-topic-name-input
+                                :sub="true"
+                                :pub="false"
+                                :row="props2"
+                                :sn="props.row.sn"
+                                sub-label="Motor Command"/>
 
-                      <!--                            <el-divider content-position="left">ROS2 Message Definition - Motor Control Command-->
-                      <!--                            </el-divider>-->
-                      <!--                            <el-form-item label="Message Type" style="margin: 0">-->
-                      <!--                              <el-tag>custom_msgs/WriteExternalPWM</el-tag>-->
-                      <!--                            </el-form-item>-->
-                      <!--                            <el-divider/>-->
-                      <!--                            <el-form-item class="havetag" label="channels" style="margin: 0">-->
-                      <!--                              <el-tag size="small">uint16[]</el-tag>-->
-                      <!--                            </el-form-item>-->
-                      <!--                          </el-form>-->
-                      <!--                        </div>-->
-                      <!--                      </div>-->
+                            <el-divider content-position="left">ROS2 Message Definition - Motor
+                              Control Command
+                            </el-divider>
+                            <WriteExternalPWM/>
+                          </el-form>
+                        </div>
+                      </div>
 
                       <!-- MS5837(30BA) -->
                       <div v-if="props2.row.type === 8">
@@ -763,6 +748,7 @@ import ReadSBUSRC from "@/components/message_types/ReadSBUSRC.vue";
 import WriteDSHOT from "@/components/message_types/WriteDSHOT.vue";
 import WriteOnBoardPWM from "@/components/message_types/WriteOnBoardPWM.vue";
 import WriteDJIMotor from "@/components/message_types/WriteDJIMotor.vue";
+import WriteExternalPWM from "@/components/message_types/WriteExternalPWM.vue";
 import ReadDJIMotor from "@/components/message_types/ReadDJIMotor.vue";
 import WriteDmMotorMITControl from "@/components/message_types/WriteDmMotorMITControl.vue";
 import WriteDmMotorSpeedControl from "@/components/message_types/WriteDmMotorSpeedControl.vue";
@@ -811,6 +797,7 @@ export default {
     HexInput,
     Ros2TopicNameInput,
     ControlPeriodInput,
+    WriteExternalPWM,
     ConnectionLostActionSelector,
     ReadDmMotor,
     WriteDSHOT,

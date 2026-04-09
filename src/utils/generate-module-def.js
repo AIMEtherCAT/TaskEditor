@@ -206,18 +206,15 @@ export function generateModuleDef(module) {
                 break
             }
             // external pwm
-            // case 7: {
-            //     res += `            sdowrite_uart_id: !uint8_t ${task_info.uart_id}\n`
-            //     res += `            sdowrite_pwm_period: !uint16_t ${task_info.expected_period}\n`
-            //     res += `            sdowrite_channel_num: !uint8_t ${task_info.enabled_channel_count}\n`
-            //     res += `            sdowrite_init_value: !uint16_t ${task_info.init_value}\n`
-            //     res += `            sub_topic: !std::string '${task_info.write_topic || `/ecat/sn${module.sn}/app${i}/write`}'\n`
-            //     res += `            pdowrite_offset: !uint16_t ${pdowrite_offset}\n`
-            //
-            //     sdo_length += 7
-            //     pdowrite_offset += (task_info.enabled_channel_count * 2)
-            //     break
-            // }
+            case 7: {
+                res += `            sdowrite_uart_id: !uint8_t ${task_info.uart_id}\n`
+                res += `            sdowrite_pwm_period: !uint16_t ${task_info.expected_period}\n`
+                res += `            sdowrite_channel_num: !uint8_t ${task_info.enabled_channel_count}\n`
+                res += `            sdowrite_init_value: !uint16_t ${task_info.init_value}\n`
+
+                pdowrite_offset += (task_info.enabled_channel_count * 2)
+                break
+            }
             // ms5876 30ba
             case 8: {
                 res += `            sdowrite_i2c_id: !uint8_t ${task_info.i2c_id}\n`
