@@ -31,6 +31,9 @@
                 <el-button @click="props.row.task.push(deepClone(examples.djirc))">DJI RC</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.djivt13))">DJI VT13</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.sbus_rc))">SBUS RC</el-button>
+                <el-divider direction="vertical"/>
+
+
                 <el-button @click="props.row.task.push(deepClone(examples.hipnucimu_can))">HIPNUC IMU(CAN)</el-button>
                 <el-button @click="props.row.task.push(deepClone(examples.super_cap))">SUPER CAP(CAN)</el-button>
                 <!--                <el-button @click="props.row.task.push(deepClone(examples.ms5837_30ba))">MS5837(30BA) *UNTESTED-->
