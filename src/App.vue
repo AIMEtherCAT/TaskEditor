@@ -16,7 +16,7 @@
       <div class="c_top">
         <div class="xh">Made<br>with love</div>
       </div>
-      <div>2025.12 v2.1</div>
+      <div>{{ version }}</div>
     </div>
   </div>
 </template>
@@ -33,10 +33,12 @@ export default {
   },
   mounted() {
     document.title = 'TaskAssignment'
+    this.version = __APP_VERSION__
   },
   data() {
     return {
-      activeName: 'assignment'
+      activeName: 'assignment',
+      version: 'Unknown Build'
     };
   },
   methods: {
