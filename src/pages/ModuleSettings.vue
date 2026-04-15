@@ -856,46 +856,46 @@
 <script>
 
 import ConnectionLostActionSelector from "@/components/ConnectionLostActionSelector.vue";
-import ReadDmMotor from "@/components/message_types/ReadDmMotor.vue";
-import ReadSBUSRC from "@/components/message_types/ReadSBUSRC.vue";
-import WriteDSHOT from "@/components/message_types/WriteDSHOT.vue";
-import WriteOnBoardPWM from "@/components/message_types/WriteOnBoardPWM.vue";
-import WriteDJIMotor from "@/components/message_types/WriteDJIMotor.vue";
-import WriteDDMotor from "@/components/message_types/WriteDDMotor.vue";
-import WriteExternalPWM from "@/components/message_types/WriteExternalPWM.vue";
-import ReadDJIMotor from "@/components/message_types/ReadDJIMotor.vue";
-import ReadDDMotor from "@/components/message_types/ReadDDMotor.vue";
-import WriteDmMotorMITControl from "@/components/message_types/WriteDmMotorMITControl.vue";
-import WriteDmMotorSpeedControl from "@/components/message_types/WriteDmMotorSpeedControl.vue";
+import ReadDmMotor from "@/components/message-types/ReadDmMotor.vue";
+import ReadSBUSRC from "@/components/message-types/ReadSBUSRC.vue";
+import WriteDSHOT from "@/components/message-types/WriteDSHOT.vue";
+import WriteOnBoardPWM from "@/components/message-types/WriteOnBoardPWM.vue";
+import WriteDJIMotor from "@/components/message-types/WriteDJIMotor.vue";
+import WriteDDMotor from "@/components/message-types/WriteDDMotor.vue";
+import WriteExternalPWM from "@/components/message-types/WriteExternalPWM.vue";
+import ReadDJIMotor from "@/components/message-types/ReadDJIMotor.vue";
+import ReadDDMotor from "@/components/message-types/ReadDDMotor.vue";
+import WriteDmMotorMITControl from "@/components/message-types/WriteDmMotorMITControl.vue";
+import WriteDmMotorSpeedControl from "@/components/message-types/WriteDmMotorSpeedControl.vue";
 import WriteDmMotorPositionControlWithSpeedLimit
-  from "@/components/message_types/WriteDmMotorPositionControlWithSpeedLimit.vue";
+  from "@/components/message-types/WriteDmMotorPositionControlWithSpeedLimit.vue";
 import Ros2TopicNameInput from "@/components/Ros2TopicNameInput.vue";
 import HexInput from "@/components/HexInput.vue";
 import CanSelector from "@/components/CanSelector.vue";
 import ControlPeriodInput from "@/components/ControlPeriodInput.vue";
 import NumberInput from "@/components/NumberInput.vue";
 import PortSelector from "@/components/PortSelector.vue";
-import ReadDJIRC from "@/components/message_types/ReadDJIRC.vue";
-import ReadVT13 from "@/components/message_types/ReadVT13RC.vue"
-import ReadLkMotor from "@/components/message_types/ReadLkMotor.vue";
-import WriteLkMotorOpenloopControl from "@/components/message_types/WriteLkMotorOpenloopControl.vue";
-import WriteLkMotorBroadcastCurrentControl from "@/components/message_types/WriteLkMotorBroadcastCurrentControl.vue";
-import ReadLkMotorMulti from "@/components/message_types/ReadLkMotorMulti.vue";
-import ReadMS5837BA30 from "@/components/message_types/ReadMS5837BA30.vue";
-import WriteLkMotorTorqueControl from "@/components/message_types/WriteLkMotorTorqueControl.vue";
+import ReadDJIRC from "@/components/message-types/ReadDJIRC.vue";
+import ReadVT13 from "@/components/message-types/ReadVT13RC.vue"
+import ReadLkMotor from "@/components/message-types/ReadLkMotor.vue";
+import WriteLkMotorOpenloopControl from "@/components/message-types/WriteLkMotorOpenloopControl.vue";
+import WriteLkMotorBroadcastCurrentControl from "@/components/message-types/WriteLkMotorBroadcastCurrentControl.vue";
+import ReadLkMotorMulti from "@/components/message-types/ReadLkMotorMulti.vue";
+import ReadMS5837BA30 from "@/components/message-types/ReadMS5837BA30.vue";
+import WriteLkMotorTorqueControl from "@/components/message-types/WriteLkMotorTorqueControl.vue";
 import WriteLkMotorMultiRoundPositionControl
-  from "@/components/message_types/WriteLkMotorMultiRoundPositionControl.vue";
+  from "@/components/message-types/WriteLkMotorMultiRoundPositionControl.vue";
 import WriteLkMotorMultiRoundPositionControlWithSpeedLimit
-  from "@/components/message_types/WriteLkMotorMultiRoundPositionControlWithSpeedLimit.vue";
+  from "@/components/message-types/WriteLkMotorMultiRoundPositionControlWithSpeedLimit.vue";
 import WriteLkMotorSingleRoundPositionControlWithSpeedLimit
-  from "@/components/message_types/WriteLkMotorSingleRoundPositionControlWithSpeedLimit.vue";
-import ReadSuperCap from "@/components/message_types/ReadSuperCap.vue";
-import WriteSuperCap from "@/components/message_types/WriteSuperCap.vue";
-import ReadCANPMU from "@/components/message_types/ReadCANPMU.vue";
-import ModuleAddButtons from "@/components/module_settings/ModuleAddButtons.vue";
+  from "@/components/message-types/WriteLkMotorSingleRoundPositionControlWithSpeedLimit.vue";
+import ReadSuperCap from "@/components/message-types/ReadSuperCap.vue";
+import WriteSuperCap from "@/components/message-types/WriteSuperCap.vue";
+import ReadCANPMU from "@/components/message-types/ReadCANPMU.vue";
+import ModuleAddButtons from "@/components/module-settings/ModuleAddButtons.vue";
 
 export default {
-  name: 'NewTaskAssignment',
+  name: 'ModuleSettings',
   components: {
     ModuleAddButtons,
     ReadCANPMU,

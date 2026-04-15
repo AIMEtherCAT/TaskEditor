@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import highlightjs from '@/components/code_generator/highlightjs.vue';
+import highlightjs from '@/components/code-generator/HighlightedCodeArea.vue';
 
 export default {
   name: 'ModuleConfigurationCard',

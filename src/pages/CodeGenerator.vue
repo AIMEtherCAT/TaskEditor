@@ -30,11 +30,11 @@
 
 <script>
 import {generateModuleDef} from '@/utils/generate-module-def';
-import HeaderCard from '@/components/code_generator/HeaderCard.vue';
-import ModuleConfigurationCard from '@/components/code_generator/ModuleConfigurationCard.vue';
+import HeaderCard from '@/components/code-generator/HeaderCard.vue';
+import ModuleConfigurationCard from '@/components/code-generator/ModuleConfigurationCard.vue';
 
 export default {
-  name: 'Generator',
+  name: 'CodeGenerator',
   components: {
     HeaderCard,
     ModuleConfigurationCard,

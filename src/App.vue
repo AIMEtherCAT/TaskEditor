@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import ModuleSettings from "@/pages/module_settings.vue";
-import CodeGenerator from "@/pages/code_generator.vue";
+import ModuleSettings from "@/pages/ModuleSettings.vue";
+import CodeGenerator from "@/pages/CodeGenerator.vue";
 
 export default {
   name: 'TaskAssignment',
