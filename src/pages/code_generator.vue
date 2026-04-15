@@ -96,13 +96,6 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=JetBrains+Mono');
-
-.code {
-  font-family: 'JetBrains Mono', serif;
-  line-height: 23px !important;
-}
-
 .box-card {
   margin-bottom: 20px;
 }

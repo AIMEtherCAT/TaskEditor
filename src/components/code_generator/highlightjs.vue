@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     languageClass() {
-      return `language-${this.language}`;
+      return `code language-${this.language}`;
     },
   },
   watch: {
@@ -46,4 +46,12 @@ export default {
 
 <style>
 @import 'highlight.js/styles/github.css';
+
+@import url('https://fonts.googleapis.com/css?family=JetBrains+Mono');
+
+.code {
+  font-family: 'JetBrains Mono', serif;
+  line-height: 23px !important;
+  padding: 0 !important;
+}
 </style>

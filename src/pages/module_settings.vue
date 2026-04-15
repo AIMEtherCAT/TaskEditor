@@ -22,7 +22,7 @@
               <div class="text item with_margin_bottom" style="margin: 30px">
                 <el-divider content-position="left">Add Task</el-divider>
                 <div class="add-task-row">
-                  <el-tag type="success" effect="dark" class="add-task-tag">TXPDO (slv→mst)</el-tag>
+                  <el-tag type="success" effect="dark" class="add-task-tag">RCs / Sensors</el-tag>
                   <el-button @click="addTask(props.row.task, examples.djirc)">DJI RC</el-button>
                   <el-button @click="addTask(props.row.task, examples.djivt13)">DJI VT13</el-button>
                   <el-button @click="addTask(props.row.task, examples.sbus_rc)">SBUS RC</el-button>
@@ -33,7 +33,7 @@
                   <el-button @click="addTask(props.row.task, examples.can_pmu)">PMU(CAN)</el-button>
                 </div>
                 <div class="add-task-row">
-                  <el-tag type="warning" effect="dark" class="add-task-tag">RXPDO (mst→slv)</el-tag>
+                  <el-tag type="warning" effect="dark" class="add-task-tag">Actuators</el-tag>
                   <el-button @click="addTask(props.row.task, examples.djican)">DJI Motor</el-button>
                   <el-button @click="addTask(props.row.task, examples.dm_motor)">DM Motor</el-button>
                   <el-button @click="addTask(props.row.task, examples.ddmotor)">DD Motor</el-button>
