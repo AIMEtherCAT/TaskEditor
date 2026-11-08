@@ -56,6 +56,8 @@ export default {
           return 'H750 Universal Module';
         case 0x04:
           return 'H750 Universal Module (Large PDO V.)';
+        case 0x05:
+          return 'HPM6E80 Universal Module';
       }
     },
     getPdoLen(hexId) {
@@ -64,6 +66,8 @@ export default {
           return [80, 80];
         case 0x04:
           return [112, 80];
+        case 0x05:
+          return [80, 80];
       }
     },
     downloadAll() {

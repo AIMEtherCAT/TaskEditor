@@ -1178,6 +1178,8 @@ export default {
           return "H750 Universal Module"
         case 0x04:
           return "H750 Universal Module (Large PDO V.)"
+        case 0x05:
+          return "HPM6E80 Universal Module"
       }
     },
     getAppTypeFriendlyName(hexId) {
