@@ -2,12 +2,14 @@
   "name": "EtherCAT_TaskEditor",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "serve": "vite",
     "build": "vite build",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "element-plus": "^2.11.2",
     "highlight.js": "^11.11.1",
     "vue": "^3.5.22"
