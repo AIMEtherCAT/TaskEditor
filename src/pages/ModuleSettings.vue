@@ -21,26 +21,51 @@
             <div>
               <div class="text item with_margin_bottom" style="margin: 30px">
                 <el-divider content-position="left">Add Task</el-divider>
+                <el-alert
+                    v-if="props.row.type === 0x05"
+                    :closable="false"
+                    style="margin-bottom: 15px;"
+                    type="info"
+                    show-icon
+                >
+                  <template #title>
+                    HPM6E80 Universal Module 当前固件仅启用 DJI Motor 任务，且仅使用单路 CAN (MCAN6 / CAN1)；其余暂未支持任务已禁用。
+                  </template>
+                </el-alert>
                 <div class="add-task-row">
                   <el-tag type="success" effect="dark" class="add-task-tag">RCs / Sensors</el-tag>
-                  <el-button @click="addTask(props.row.task, examples.djirc)">DJI RC</el-button>
-                  <el-button @click="addTask(props.row.task, examples.djivt13)">DJI VT13</el-button>
-                  <el-button @click="addTask(props.row.task, examples.sbus_rc)">SBUS RC</el-button>
-                  <el-button @click="addTask(props.row.task, examples.hipnucimu_can)">HIPNUC IMU(CAN)</el-button>
-                  <el-button @click="addTask(props.row.task, examples.super_cap)">SUPER CAP(CAN)</el-button>
-                  <el-button @click="addTask(props.row.task, examples.ms5837_30ba)">MS5837(30BA)</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.djirc.type)"
+                             @click="addTask(props.row.task, examples.djirc, props.row.type)">DJI RC</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.djivt13.type)"
+                             @click="addTask(props.row.task, examples.djivt13, props.row.type)">DJI VT13</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.sbus_rc.type)"
+                             @click="addTask(props.row.task, examples.sbus_rc, props.row.type)">SBUS RC</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.hipnucimu_can.type)"
+                             @click="addTask(props.row.task, examples.hipnucimu_can, props.row.type)">HIPNUC IMU(CAN)</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.super_cap.type)"
+                             @click="addTask(props.row.task, examples.super_cap, props.row.type)">SUPER CAP(CAN)</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.ms5837_30ba.type)"
+                             @click="addTask(props.row.task, examples.ms5837_30ba, props.row.type)">MS5837(30BA)</el-button>
                   <!--                <el-button @click="addTask(props.row.task, examples.adc)">OnBoard ADC *UNTESTED</el-button>-->
-                  <el-button @click="addTask(props.row.task, examples.can_pmu)">PMU(CAN)</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.can_pmu.type)"
+                             @click="addTask(props.row.task, examples.can_pmu, props.row.type)">PMU(CAN)</el-button>
                 </div>
                 <div class="add-task-row">
                   <el-tag type="warning" effect="dark" class="add-task-tag">Actuators</el-tag>
-                  <el-button @click="addTask(props.row.task, examples.djican)">DJI Motor</el-button>
-                  <el-button @click="addTask(props.row.task, examples.dm_motor)">DM Motor</el-button>
-                  <el-button @click="addTask(props.row.task, examples.ddmotor)">DD Motor</el-button>
-                  <el-button @click="addTask(props.row.task, examples.lktech)">LkTech Motor</el-button>
-                  <el-button @click="addTask(props.row.task, examples.dshot)">DSHOT600</el-button>
-                  <el-button @click="addTask(props.row.task, examples.vanilla_pwm)">OnBoard PWM</el-button>
-                  <el-button @click="addTask(props.row.task, examples.external_pwm)">ExternalBoard PWM</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.djican.type)"
+                             @click="addTask(props.row.task, examples.djican, props.row.type)">DJI Motor</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.dm_motor.type)"
+                             @click="addTask(props.row.task, examples.dm_motor, props.row.type)">DM Motor</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.ddmotor.type)"
+                             @click="addTask(props.row.task, examples.ddmotor, props.row.type)">DD Motor</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.lktech.type)"
+                             @click="addTask(props.row.task, examples.lktech, props.row.type)">LkTech Motor</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.dshot.type)"
+                             @click="addTask(props.row.task, examples.dshot, props.row.type)">DSHOT600</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.vanilla_pwm.type)"
+                             @click="addTask(props.row.task, examples.vanilla_pwm, props.row.type)">OnBoard PWM</el-button>
+                  <el-button :disabled="!isTaskSupportedForModule(props.row.type, examples.external_pwm.type)"
+                             @click="addTask(props.row.task, examples.external_pwm, props.row.type)">ExternalBoard PWM</el-button>
                 </div>
 
                 <el-divider content-position="left">Module Task Detail Configuration</el-divider>
@@ -87,7 +112,7 @@
                                                              label="Report"/>
 
                             <el-divider content-position="left">CAN Configuration</el-divider>
-                            <can-selector :row="props2.row"/>
+                            <can-selector :row="props2.row" :module-type="props.row.type"/>
 
                             <el-alert
                                 :closable="false"
@@ -179,7 +204,7 @@
                                                              label="Report"/>
 
                             <el-divider content-position="left">CAN Configuration</el-divider>
-                            <can-selector :row="props2.row"/>
+                            <can-selector :row="props2.row" :module-type="props.row.type"/>
                             <hex-input field="packet1_id" :row="props2.row" label="Packet1 ID"/>
                             <hex-input field="packet2_id" :row="props2.row" label="Packet2 ID"/>
                             <hex-input field="packet3_id" :row="props2.row" label="Packet3 ID"/>
@@ -246,7 +271,7 @@
                                                              label="Report"/>
 
                             <el-divider content-position="left">CAN Configuration</el-divider>
-                            <can-selector :row="props2.row"/>
+                            <can-selector :row="props2.row" :module-type="props.row.type"/>
 
                             <el-form-item class="havetag" label="Motor Control Packet ID">
                               <el-radio-group v-model="props2.row.can_packet_id">
@@ -582,7 +607,7 @@
 
                             <el-divider content-position="left">CAN Configuration</el-divider>
 
-                            <can-selector :row="props2.row"/>
+                            <can-selector :row="props2.row" :module-type="props.row.type"/>
                             <hex-input field="can_id" :row="props2.row" label="CAN ID"/>
                             <hex-input field="master_id" :row="props2.row" label="Master ID"/>
 
@@ -659,7 +684,7 @@
 
                             <el-divider content-position="left">CAN Configuration</el-divider>
 
-                            <can-selector :row="props2.row"/>
+                            <can-selector :row="props2.row" :module-type="props.row.type"/>
                             <hex-input field="chassis_to_cap_id" :row="props2.row" label="Capacitor Control Packet ID"/>
                             <hex-input field="cap_to_chassis_id" :row="props2.row" label="Capacitor Report Packet ID"/>
 
@@ -718,7 +743,7 @@
                                                              label="Report"/>
 
                             <el-divider content-position="left">CAN Configuration</el-divider>
-                            <can-selector :row="props2.row" :showBaudrate="false"/>
+                            <can-selector :row="props2.row" :module-type="props.row.type" :showBaudrate="false"/>
 
                             <el-form-item label="CAN Baudrate">
                               <el-radio-group v-model="props2.row.can_type">
@@ -1153,6 +1178,9 @@ export default {
         if (mod.task) {
           mod.task.forEach(t => {
             if (t._uid === undefined) t._uid = this._uidCounter++;
+            if (mod.type === 0x05 && 'can_inst' in t && t.can_inst !== 1) {
+              t.can_inst = 1;
+            }
           });
         }
       });
@@ -1162,8 +1190,20 @@ export default {
     addModule(type) {
       this.modules.push({type, task: [], latency_topic: '', sn: '', _uid: this._uidCounter++});
     },
-    addTask(taskList, example) {
+    isTaskSupportedForModule(moduleType, taskType) {
+      if (moduleType === 0x05) {
+        return taskType === 0x05;
+      }
+      return true;
+    },
+    addTask(taskList, example, moduleType = 0) {
+      if (!this.isTaskSupportedForModule(moduleType, example.type)) {
+        return;
+      }
       const cloned = this.deepClone(example);
+      if (moduleType === 0x05 && 'can_inst' in cloned) {
+        cloned.can_inst = 1;
+      }
       cloned._uid = this._uidCounter++;
       taskList.push(cloned);
     },
